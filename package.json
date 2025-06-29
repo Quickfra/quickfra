@@ -1,0 +1,55 @@
+{
+    "name": "quickfra-monorepo",
+    "version": "1.0.0",
+    "private": true,
+    "packageManager": "pnpm@9.0.0",
+    "engines": {
+        "node": ">=20.0.0",
+        "pnpm": ">=9.0.0"
+    },
+    "scripts": {
+        "build": "nx run-many --target=build --all",
+        "dev": "nx run-many --target=dev --all",
+        "lint": "nx run-many --target=lint --all",
+        "test": "nx run-many --target=test --all",
+        "type-check": "nx run-many --target=type-check --all",
+        "clean": "nx reset && rm -rf node_modules && rm -rf dist",
+        "prepare": "husky install"
+    },
+    "devDependencies": {
+        "@nx/eslint-plugin": "^21.2.1",
+        "@nx/js": "21.2.1",
+        "@nx/next": "21.2.1",
+        "@nx/workspace": "21.2.1",
+        "@types/node": "^24.0.3",
+        "@types/react": "^19.1.8",
+        "@types/react-dom": "^19.1.6",
+        "@typescript-eslint/eslint-plugin": "^8.34.1",
+        "@typescript-eslint/parser": "^8.34.1",
+        "eslint": "^9.29.0",
+        "eslint-config-next": "^15.3.4",
+        "eslint-config-prettier": "^10.1.5",
+        "eslint-plugin-jsx-a11y": "^6.10.2",
+        "eslint-plugin-react": "^7.37.5",
+        "eslint-plugin-react-hooks": "^5.2.0",
+        "husky": "^9.1.7",
+        "lint-staged": "^16.1.2",
+        "nx": "21.2.1",
+        "prettier": "^3.5.3",
+        "typescript": "^5.8.3",
+        "vitest": "^3.2.4"
+    },
+    "workspaces": [
+        "apps/*",
+        "packages/*"
+    ],
+    "lint-staged": {
+        "*.{js,jsx,ts,tsx}": [
+            "eslint --fix",
+            "prettier --write"
+        ],
+        "*.{json,md,yml,yaml}": [
+            "prettier --write"
+        ]
+    }
+}
