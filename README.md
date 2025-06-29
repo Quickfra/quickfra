@@ -62,4 +62,4 @@ It all started by me creating a guide on how to configure my VPS with all the ne
 
 I was tired of setting up mail servers, monitoring tools, and other services manually, so I created Quickfra to automate these tasks. The goal is to provide a one-stop solution for deploying and managing complex infrastructure setups with minimal effort.
 
-> **Diego Rodriguez** alias **dewstouh**, the founder of Quickfra.
+> _**Diego Rodriguez**, the Founder and CEO of Quickfra, quickfra.com._
