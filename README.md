@@ -1,3 +1,5 @@
+![](./assets/banner.png)
+
 # Quickfra - Automated platform deployment tool
 Quickfra is a web & command-line tool designed to simplify the deployment of complex infrastructure setups across multiple cloud providers. It supports services like Coolify, Stalwart Mail, and Uptime Kuma, enabling users to deploy a fully functional platform with a single command.
 
