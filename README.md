@@ -39,7 +39,7 @@ Quickfra uses a microservices architecture with the following components:
 - **Crossplane**: Abstracts cloud providers and allows for resource composition using Custom Resource Definitions (CRDs).
 
 # Support
-If you need help or have questions, please open an issue on the repository and also check out our website at [quickfra.io](https://quickfra.io).
+If you need help or have questions, please open an issue on the repository and also check out our website at [quickfra.com](https://quickfra.com).
 
 # License
 Quickfra is licensed under the Apache License 2.0.
