@@ -1,0 +1,25 @@
+name: "🛡️ Security vulnerability"
+description: Privately disclose a security issue.
+labels: ["type:security", "priority:critical"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **IMPORTANT:** Please do **NOT** describe critical vulnerabilities in public issues. Instead, email security@quickfra.com with the details. This template exists only to guide you if you’re opening a private security advisory via GitHub.
+  - type: input
+    id: severity
+    attributes:
+      label: Severity (CVSS estimate)
+      placeholder: 7.5
+  - type: textarea
+    id: details
+    attributes:
+      label: Vulnerability details
+      description: Steps to reproduce or PoC (will remain private).
+    validations:
+      required: true
+    attributes:
+      label: Additional context
+      description: Add any other context about the problem here.
+    validations:
+      required: false
