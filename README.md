@@ -43,21 +43,18 @@ quickfra up --cloud digitalocean --services webmail,n8n,postgres,redis
 - `vultr` - Vultr
 - `linode` - Linode/Akamai
 
-### Available Services
-- `coolify` - Self-hostable deployment platform (automatically installed)
+### Available Addons
 - `webmail` - Stalwart Mail with web interface
 - `mail` - Stalwart Mail server only
 - `status` - Uptime Kuma monitoring and status page
 - `n8n` - Workflow automation platform
 - `postgres` - PostgreSQL database
-- `mariadb` - MariaDB database
-- `mysql` - MySQL database
 - `redis` - Redis cache and data store
 
 ### How it Works
 1. **Cloud Setup**: Quickfra provisions a virtual machine on your chosen cloud provider
 2. **Coolify Installation**: Automatically installs Coolify using their official installation script
-3. **Service Deployment**: Adds selected services as resources within Coolify
+3. **Addon Deployment**: Adds selected addons as resources within Coolify
 4. **Configuration**: Sets up networking, SSL certificates, and service interconnections
 5. **Access**: Provides you with URLs and credentials to access your deployed services
 
@@ -88,7 +85,7 @@ Quickfra simplifies infrastructure deployment by leveraging Coolify as the core 
 ## Deployment Flow
 1. **Infrastructure**: Quickfra provisions cloud resources (VM, networking, storage)
 2. **Platform**: Coolify is installed and configured automatically
-3. **Services**: Selected services are deployed as Coolify applications
+3. **Addons**: Selected services are deployed as Coolify applications
 4. **Management**: All ongoing operations handled through Coolify's interface
 
 # Support
