@@ -1,35 +1,13 @@
-// Cloud providers
-export type CloudProvider = 'aws' | 'oci' | 'digitalocean' | 'hetzner';
+export type LogLevel = 'debug' | 'info' | 'warn' | 'error';
 
-// Available services
-export type Service = 'webmail' | 'mail' | 'status' | 'n8n' | 'postgres' | 'redis';
-
-// Service domain mappings
-export const SERVICE_SUBDOMAINS: Record<Service, string> = {
-  webmail: 'webmail',
-  mail: 'mail', 
-  status: 'status',
-  n8n: 'n8n',
-  postgres: 'postgres',
-  redis: 'redis'
-};
-
-
-
-// Deployment config
-export interface DeploymentConfig {
-  cloud: CloudProvider;
-  services: Service[];
-  domain: string;
-  region?: string;
-  customSubdomains?: Partial<Record<Service, string>>;
-  adminSubdomain?: string; // Default: 'admin'
+export interface LogEntry {
+  level: LogLevel;
+  message: string;
+  timestamp: Date;
+  metadata?: Record<string, unknown>;
 }
 
-// Deployment result
-export interface DeploymentResult {
-  id: string;
-  status: 'pending' | 'running' | 'error';
-  urls?: Record<string, string>;
-  error?: string;
+export interface QuickfraError extends Error {
+  code: string;
+  details?: Record<string, unknown>;
 }
