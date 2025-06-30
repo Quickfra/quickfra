@@ -1,42 +1,95 @@
 ![](./assets/banner.png)
 
 # Quickfra - Automated platform deployment tool
-Quickfra is a web & command-line tool designed to simplify the deployment of complex infrastructure setups across multiple cloud providers. It supports services like Coolify, Stalwart Mail, and Uptime Kuma, enabling users to deploy a fully functional platform with a single command.
+Quickfra is a command-line tool designed to simplify the deployment of complex infrastructure setups across multiple cloud providers. It automatically installs [Coolify](https://coolify.io) (an open-source self-hostable Heroku alternative) and deploys your chosen services as managed resources within Coolify, enabling you to deploy a fully functional platform with a single command.
 
 # Key Features
-- **Multi-cloud Support**: Deploy across AWS, OCI, and other cloud providers.
-- **Service Integration**: Easily deploy and manage services like Coolify, inside Coolify, Stalwart Mail, and Uptime Kuma.
-- **Single Command Deployment**: Use `quickfra up` to deploy your entire platform with a single command.
-- **Observability**: Built-in monitoring and logging for all deployed services.
-- **User-friendly UI**: Next.js-based web interface for configuration and management.
+- **Multi-cloud Support**: Deploy across AWS, OCI, DigitalOcean, Hetzner, and other cloud providers.
+- **Coolify Integration**: Automatically installs and configures Coolify as your deployment platform.
+- **Service Orchestration**: Deploy databases, web services, and automation tools as Coolify resources.
+- **Single Command Deployment**: Use `quickfra up` to provision infrastructure and deploy services instantly.
+- **Zero Configuration**: Sensible defaults with automatic SSL, networking, and service discovery.
+- **Observability**: Built-in monitoring via Uptime Kuma and Coolify's integrated dashboards.
 
 # Quick Start
-With Quickfra you got multiple options to deploy your platform. The simplest way is to use the command line interface (CLI) to deploy a predefined set of services.
+With Quickfra you have multiple options to deploy your platform. The simplest way is to use the command line interface (CLI) to deploy a predefined set of services.
 
-With CLI:
+## CLI Usage
+The `quickfra up` command installs [Coolify](https://coolify.io) on your cloud provider and automatically adds the selected services as resources within Coolify for easy management.
+
+### Basic Usage
 ```bash
-quickfra up --cloud oci --services coolify,mail,status
+# Deploy with specific cloud provider and services
+quickfra up --cloud <provider> --services <service1,service2,...>
 ```
 
-Using the Web UI:
-((TODO: Add instructions for deploying via the web UI))
+### Examples
+```bash
+# Deploy to Oracle Cloud with web services and databases
+quickfra up --cloud oci --services webmail,mail,status,n8n,postgres,mariadb,mysql,redis
+
+# Deploy to AWS with minimal services
+quickfra up --cloud aws --services coolify,mail,status
+
+# Deploy to DigitalOcean with automation tools
+quickfra up --cloud digitalocean --services webmail,n8n,postgres,redis
+```
+
+### Supported Cloud Providers
+- `aws` - Amazon Web Services
+- `oci` - Oracle Cloud Infrastructure  
+- `digitalocean` - DigitalOcean
+- `hetzner` - Hetzner Cloud
+- `vultr` - Vultr
+- `linode` - Linode/Akamai
+
+### Available Services
+- `coolify` - Self-hostable deployment platform (automatically installed)
+- `webmail` - Stalwart Mail with web interface
+- `mail` - Stalwart Mail server only
+- `status` - Uptime Kuma monitoring and status page
+- `n8n` - Workflow automation platform
+- `postgres` - PostgreSQL database
+- `mariadb` - MariaDB database
+- `mysql` - MySQL database
+- `redis` - Redis cache and data store
+
+### How it Works
+1. **Cloud Setup**: Quickfra provisions a virtual machine on your chosen cloud provider
+2. **Coolify Installation**: Automatically installs Coolify using their official installation script
+3. **Service Deployment**: Adds selected services as resources within Coolify
+4. **Configuration**: Sets up networking, SSL certificates, and service interconnections
+5. **Access**: Provides you with URLs and credentials to access your deployed services
+
+All services are managed through Coolify's intuitive web interface, giving you full control over deployments, monitoring, and scaling.
+
+## Web UI
+Access the Quickfra web interface for visual configuration and management:
+```
+# Coming soon - deploy via web interface
+```
 
 # Architecture Overview
-Quickfra uses a microservices architecture with the following components:
-- **Next.js UI**: Provides a user-friendly interface for managing deployments.
-- **NestJS API**: Handles backend logic and communicates with the orchestrator.
-- **Orchestrator**: Uses Crossplane to manage resources across different cloud providers.
-- **Coolify**: Manages application deployments.
-- **Stalwart Mail**: Provides email services with a web admin interface.
-- **Uptime Kuma**: Monitors service status and provides a status page.
-- **NATS Streaming**: Facilitates communication between services.
-- **Helm & Kustomize**: Used for deploying and managing Kubernetes resources.
-- **Terraform**: Manages cloud infrastructure across providers like AWS and OCI.
-- **Nx Monorepo**: Organizes the codebase into apps, packages, charts, and infrastructure modules.
-- **GitOps Workflow**: Uses a GitOps approach for managing deployments, ensuring that all changes are versioned and auditable.
-- **Documentation**: Includes ADRs, runbooks, and threat models to ensure maintainability and security.
-- **CLI**: Built with oclif in TypeScript, providing a powerful command-line interface for managing deployments.
-- **Crossplane**: Abstracts cloud providers and allows for resource composition using Custom Resource Definitions (CRDs).
+Quickfra simplifies infrastructure deployment by leveraging Coolify as the core deployment platform:
+
+## Core Components
+- **Quickfra CLI**: TypeScript-based command-line tool for automated deployments
+- **Cloud Provisioning**: Automated VM setup across multiple cloud providers
+- **Coolify Platform**: Self-hosted deployment platform (automatically installed)
+  - Manages all application deployments and services
+  - Provides web UI for ongoing management
+  - Handles SSL certificates, backups, and monitoring
+- **Service Ecosystem**: Pre-configured services deployed as Coolify resources:
+  - **Stalwart Mail**: Email server with web administration
+  - **Uptime Kuma**: Status monitoring and uptime tracking  
+  - **n8n**: Workflow automation and integration platform
+  - **Databases**: PostgreSQL, MySQL, MariaDB, Redis
+
+## Deployment Flow
+1. **Infrastructure**: Quickfra provisions cloud resources (VM, networking, storage)
+2. **Platform**: Coolify is installed and configured automatically
+3. **Services**: Selected services are deployed as Coolify applications
+4. **Management**: All ongoing operations handled through Coolify's interface
 
 # Support
 If you need help or have questions, please open an issue on the repository and also check out our website at [quickfra.com](https://quickfra.com).
