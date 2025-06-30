@@ -40,8 +40,6 @@ quickfra up --cloud digitalocean --services webmail,n8n,postgres,redis
 - `oci` - Oracle Cloud Infrastructure  
 - `digitalocean` - DigitalOcean
 - `hetzner` - Hetzner Cloud
-- `vultr` - Vultr
-- `linode` - Linode/Akamai
 
 ### Available Addons
 - `webmail` - Stalwart Mail with web interface
