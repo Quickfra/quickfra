@@ -7,21 +7,30 @@ export class DockerComposeService {
     return join(__dirname, '..', 'docker-compose', `${service}.yml`);
   }
 
-  static getComposeConfig(service: Service): string {
+  static getComposeConfig(service: Service, domain?: string): string {
     try {
       const composePath = this.getComposePath(service);
-      return readFileSync(composePath, 'utf-8');
+      let config = readFileSync(composePath, 'utf-8');
+      
+      // Replace domain placeholders if domain is provided
+      if (domain) {
+        config = config.replace(/\{\{DOMAIN\}\}/g, domain);
+        config = config.replace(/justdiego\.com/g, domain);
+        config = config.replace(/example\.com/g, domain);
+      }
+      
+      return config;
     } catch (error) {
       throw new Error(`Failed to load Docker Compose for service: ${service}`);
     }
   }
 
-  static getAllComposeConfigs(): Record<Service, string> {
+  static getAllComposeConfigs(domain?: string): Record<Service, string> {
     const services: Service[] = ['webmail', 'mail', 'status', 'n8n', 'postgres', 'redis'];
     const configs: Record<Service, string> = {} as Record<Service, string>;
     
     for (const service of services) {
-      configs[service] = this.getComposeConfig(service);
+      configs[service] = this.getComposeConfig(service, domain);
     }
     
     return configs;

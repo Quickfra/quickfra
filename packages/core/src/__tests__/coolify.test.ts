@@ -13,7 +13,7 @@ describe('CoolifyService', () => {
 
   it('should add service with service URL and docker compose config', async () => {
     const coolifyService = new CoolifyService();
-    const dockerConfig = DockerComposeService.getComposeConfig('n8n');
+    const dockerConfig = DockerComposeService.getComposeConfig('n8n', 'example.com');
     
     await expect(
       coolifyService.addService('test.host.com', 'n8n', 'n8n.example.com', dockerConfig)

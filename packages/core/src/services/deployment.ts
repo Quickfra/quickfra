@@ -25,7 +25,7 @@ export class DeploymentService implements IDeploymentService {
       for (const service of config.services) {
         const subdomain = config.customSubdomains?.[service] || SERVICE_SUBDOMAINS[service];
         const serviceUrl = `${subdomain}.${config.domain}`;
-        const dockerCompose = DockerComposeService.getComposeConfig(service);
+        const dockerCompose = DockerComposeService.getComposeConfig(service, config.domain);
         await this.coolifyService.addService(host, service, serviceUrl, dockerCompose);
         urls[service] = `https://${serviceUrl}`;
       }

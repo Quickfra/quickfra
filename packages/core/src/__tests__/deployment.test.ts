@@ -69,4 +69,20 @@ describe('DeploymentService', () => {
     expect(result.status).toBe('running');
     expect(result.urls?.['coolify']).toBe('https://admin.justdiego.com');
   });
+
+  it('should template domain in docker compose configs', async () => {
+    const coolifyService = new CoolifyService();
+    const deploymentService = new DeploymentService(coolifyService);
+    
+    const config = {
+      cloud: 'aws' as const,
+      services: ['mail' as const],
+      domain: 'testdomain.com'
+    };
+    
+    const result = await deploymentService.deploy(config);
+    
+    expect(result.status).toBe('running');
+    expect(result.urls?.['mail']).toBe('https://mail.testdomain.com');
+  });
 });

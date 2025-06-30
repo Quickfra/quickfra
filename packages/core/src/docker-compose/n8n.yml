@@ -11,4 +11,4 @@ services:
       - TZ=Europe/Madrid
       - N8N_HOST=0.0.0.0
       - N8N_PORT=5678
-      - WEBHOOK_URL=https://n8n.example.com
+      - WEBHOOK_URL=https://n8n.{{DOMAIN}}
