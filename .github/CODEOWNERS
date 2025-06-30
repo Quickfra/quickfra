@@ -1,34 +1,34 @@
 # Global owners
-* @quickfra/core-team
+* @quickfra/core
 
 # Documentation
-*.md @quickfra/docs-team
-/docs/ @quickfra/docs-team
+*.md @quickfra/docs
+/docs/ @quickfra/docs
 
 # Configuration files
-*.json @quickfra/core-team
-*.yml @quickfra/core-team
-*.yaml @quickfra/core-team
-*.toml @quickfra/core-team
+*.json @quickfra/core
+*.yml @quickfra/core
+*.yaml @quickfra/core
+*.toml @quickfra/core
 
 # Package management
-package.json @quickfra/core-team
-pnpm-lock.yaml @quickfra/core-team
-pnpm-workspace.yaml @quickfra/core-team
+package.json @quickfra/core
+pnpm-lock.yaml @quickfra/core
+pnpm-workspace.yaml @quickfra/core
 
 # Nx configuration
-nx.json @quickfra/core-team
-project.json @quickfra/core-team
+nx.json @quickfra/core
+project.json @quickfra/core
 
 # GitHub configuration
-/.github/ @quickfra/core-team
+/.github/ @quickfra/core
 
 # Web app
-/apps/web/ @quickfra/frontend-team
+/apps/web/ @quickfra/frontend
 
 # Packages
-/packages/ @quickfra/core-team
+/packages/ @quickfra/core
 
 # Security sensitive files
-/.github/workflows/ @quickfra/security-team @quickfra/core-team
-/packages/config/ @quickfra/security-team @quickfra/core-team
+/.github/workflows/ @quickfra/security @quickfra/core
+/packages/config/ @quickfra/security @quickfra/core
