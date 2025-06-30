@@ -1,5 +1,4 @@
 name: CI
-
 on:
   push:
     branches: [main, develop]
@@ -13,33 +12,33 @@ jobs:
   main:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'pnpm'
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v4
         with:
           version: 8
 
-      - name: Install dependencies
+      - name: Install deps
         run: pnpm install --frozen-lockfile
 
-      - name: Run affected tests
+      # Set SHAs for Nx (base and head) on PR events
+      - uses: nrwl/nx-set-shas@v3
+
+      - name: Affected tests
         run: pnpm nx affected -t test --parallel=3
 
-      - name: Run affected lint
+      - name: Affected lint
         run: pnpm nx affected -t lint --parallel=3
 
-      - name: Run affected build
+      - name: Affected build
         run: pnpm nx affected -t build --parallel=3
 
-      - name: Run affected e2e tests
+      - name: Affected e2e
         run: pnpm nx affected -t e2e --parallel=1
