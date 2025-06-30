@@ -31,11 +31,13 @@ export type CloudProvider = z.infer<typeof CloudProvider>
 
 /**
  * Platform service options
+ * Currently only Coolify is supported, but designed for future extensibility
  */
 export const PlatformService = z.enum([
   'coolify',
-  'dokku',
-  'caprover',
+  // Future services will be added here:
+  // 'dokku',
+  // 'caprover',
 ])
 
 export type PlatformService = z.infer<typeof PlatformService>
