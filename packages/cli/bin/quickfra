@@ -1,0 +1,3 @@
+#!/usr/bin/env node
+
+require('@oclif/core/lib/main').run().catch(require('@oclif/core/lib/errors/handle'))
