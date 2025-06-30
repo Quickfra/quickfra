@@ -1,6 +1,6 @@
-import type { DeploymentConfig, DeploymentResult } from './types';
-import { SERVICE_SUBDOMAINS } from './types';
-import type { IDeploymentService, ICoolifyService } from './interfaces';
+import type { DeploymentConfig, DeploymentResult } from '../types';
+import { SERVICE_SUBDOMAINS } from '../types';
+import type { IDeploymentService, ICoolifyService } from '../interfaces';
 
 export class DeploymentService implements IDeploymentService {
   constructor(private coolifyService: ICoolifyService) {}

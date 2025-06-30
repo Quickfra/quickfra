@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { DeploymentService } from './deployment';
-import { CoolifyService } from './coolify';
+import { DeploymentService } from '../services/deployment';
+import { CoolifyService } from '../services/coolify';
 
 describe('DeploymentService', () => {
   it('should deploy successfully', async () => {

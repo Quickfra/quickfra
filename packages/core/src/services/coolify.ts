@@ -1,5 +1,5 @@
-import type { Service } from './types';
-import type { ICoolifyService } from './interfaces';
+import type { Service } from '../types';
+import type { ICoolifyService } from '../interfaces';
 
 export class CoolifyService implements ICoolifyService {
   async install(host: string, domain: string): Promise<void> {
