@@ -155,6 +155,7 @@ dist/
 .github/instructions
 monorepo-standards.md
 plan.md
+private
 
 vite.config.*.timestamp*
 vitest.config.*.timestamp*
