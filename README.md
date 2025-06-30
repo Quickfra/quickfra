@@ -58,7 +58,7 @@ We welcome contributions to Quickfra! Please read our [contributing guidelines](
 
 It started as a personal project to automate the deployment of my own services using coolify and docker images, but has since evolved into a more comprehensive tool that can be used by anyone looking to streamline their infrastructure management.
 
-It all started by me creating a guide on how to configure my VPS with all the necessary tools and services, including Coolify, Stalwart Mail, and Uptime Kuma. I wanted to share this guide with others, but I wanted to go further than that, because i thought "why not automate the whole process instead of just writing a guide which i will have to follow the steps over and over again?".
+By creating a guide on how to configure my VPS with all the necessary tools and services, including Coolify, Stalwart Mail, and Uptime Kuma, i wanted to it with others, but i thought "why not automate the whole process instead of just writing a guide which will make everyone follow the steps one by one and waste time?".
 
 I was tired of setting up mail servers, monitoring tools, and other services manually, so I created Quickfra to automate these tasks. The goal is to provide a one-stop solution for deploying and managing complex infrastructure setups with minimal effort.
 

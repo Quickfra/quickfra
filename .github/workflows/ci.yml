@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+env:
+  NX_CLOUD_DISTRIBUTED_EXECUTION: true
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 8
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run affected tests
+        run: pnpm nx affected -t test --parallel=3
+
+      - name: Run affected lint
+        run: pnpm nx affected -t lint --parallel=3
+
+      - name: Run affected build
+        run: pnpm nx affected -t build --parallel=3
+
+      - name: Run affected e2e tests
+        run: pnpm nx affected -t e2e --parallel=1
