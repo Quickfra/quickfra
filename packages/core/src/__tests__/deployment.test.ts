@@ -36,4 +36,37 @@ describe('DeploymentService', () => {
     expect(result.status).toBe('running');
     expect(result.urls?.['n8n']).toBe('https://automation.justdiego.com');
   });
+
+  it('should use custom admin subdomain when provided', async () => {
+    const coolifyService = new CoolifyService();
+    const deploymentService = new DeploymentService(coolifyService);
+    
+    const config = {
+      cloud: 'aws' as const,
+      services: ['n8n' as const],
+      domain: 'justdiego.com',
+      adminSubdomain: 'panel'
+    };
+    
+    const result = await deploymentService.deploy(config);
+    
+    expect(result.status).toBe('running');
+    expect(result.urls?.['coolify']).toBe('https://panel.justdiego.com');
+  });
+
+  it('should use default admin subdomain when not provided', async () => {
+    const coolifyService = new CoolifyService();
+    const deploymentService = new DeploymentService(coolifyService);
+    
+    const config = {
+      cloud: 'aws' as const,
+      services: ['n8n' as const],
+      domain: 'justdiego.com'
+    };
+    
+    const result = await deploymentService.deploy(config);
+    
+    expect(result.status).toBe('running');
+    expect(result.urls?.['coolify']).toBe('https://admin.justdiego.com');
+  });
 });

@@ -10,6 +10,6 @@ export interface ICloudService {
 }
 
 export interface ICoolifyService {
-  install(host: string, domain: string): Promise<void>;
-  addService(host: string, service: Service, serviceUrl: string): Promise<void>;
+  install(host: string, domain: string, adminSubdomain?: string): Promise<void>;
+  addService(host: string, service: Service, serviceUrl: string, dockerCompose: string): Promise<void>;
 }

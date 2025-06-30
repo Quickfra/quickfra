@@ -1,5 +1,5 @@
 import type { DeploymentConfig, DeploymentResult } from '../types';
-import { SERVICE_SUBDOMAINS } from '../types';
+import { SERVICE_SUBDOMAINS, SERVICE_DOCKER_CONFIGS } from '../types';
 import type { IDeploymentService, ICoolifyService } from '../interfaces';
 
 export class DeploymentService implements IDeploymentService {
@@ -13,15 +13,19 @@ export class DeploymentService implements IDeploymentService {
       const host = 'placeholder.example.com';
       
       // Install Coolify
-      await this.coolifyService.install(host, config.domain);
+      const adminSubdomain = config.adminSubdomain || 'admin';
+      await this.coolifyService.install(host, config.domain, adminSubdomain);
       
       // Generate service URLs and add services
-      const urls: Record<string, string> = { coolify: `https://${host}` };
+      const urls: Record<string, string> = { 
+        coolify: `https://${adminSubdomain}.${config.domain}` 
+      };
       
       for (const service of config.services) {
         const subdomain = config.customSubdomains?.[service] || SERVICE_SUBDOMAINS[service];
         const serviceUrl = `${subdomain}.${config.domain}`;
-        await this.coolifyService.addService(host, service, serviceUrl);
+        const dockerCompose = SERVICE_DOCKER_CONFIGS[service];
+        await this.coolifyService.addService(host, service, serviceUrl, dockerCompose);
         urls[service] = `https://${serviceUrl}`;
       }
       
