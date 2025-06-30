@@ -1,0 +1,20 @@
+services:
+  uptime-kuma:
+    image: 'louislam/uptime-kuma:2.0.0-beta.3'
+    environment:
+      - SERVICE_FQDN_UPTIMEKUMA_3001
+    volumes:
+      - 'uptime-kuma:/app/data'
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - extra/healthcheck
+      interval: 2s
+      timeout: 10s
+      retries: 15
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.kuma.rule=Host(`status.justdiego.com`)"
+      - "traefik.http.routers.kuma.entrypoints=http"
+      - "traefik.http.services.kuma.loadbalancer.server.port=3001"
+      - "traefik.docker.network=coolify"

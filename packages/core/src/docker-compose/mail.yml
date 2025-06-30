@@ -1,0 +1,60 @@
+services:
+  stalwart-mail:
+    image: 'stalwartlabs/stalwart:latest'
+    container_name: stalwart
+    networks:
+      - coolify
+    ports:
+      - '25:25'
+      - '587:587'
+      - '465:465'
+      - '143:143'
+      - '993:993'
+      - '4190:4190'
+      - '110:110'
+      - '995:995'
+    volumes:
+      - '/var/lib/stalwart:/opt/stalwart'
+      - '/etc/localtime:/etc/localtime:ro'
+      - '/data/coolify/certs:/data/certs:ro'
+    labels:
+      - traefik.enable=true
+      - 'traefik.http.routers.mailserver.rule=Host(`mail.justdiego.com`) || Host(`autodiscover.justdiego.com`) || Host(`autoconfig.justdiego.com`) || Host(`mta-sts.justdiego.com`) || Host(`mx.justdiego.com`) || Host(`smtp.justdiego.com`) || Host(`pop.justdiego.com`) || Host(`imap.justdiego.com`)'
+      - traefik.http.routers.mailserver.entrypoints=http
+      - traefik.http.routers.mailserver.service=mailserver
+      - traefik.http.services.mailserver.loadbalancer.server.port=8080
+      - traefik.http.routers.mailserver.tls.certresolver=letsencrypt
+      - traefik.http.routers.mailserver.tls=true
+      - 'traefik.http.routers.mailserver.tls.domains[0].main=mail.justdiego.com'
+      - 'traefik.http.routers.mailserver.tls.domains[0].sans=autodiscover.justdiego.com,autoconfig.justdiego.com,mta-sts.justdiego.com,mx.justdiego.com,smtp.justdiego.com,pop.justdiego.com,imap.justdiego.com'
+      - 'traefik.tcp.routers.smtp.rule=HostSNI(`*`)'
+      - traefik.tcp.routers.smtp.entrypoints=smtp
+      - traefik.tcp.routers.smtp.service=smtp
+      - traefik.tcp.services.smtp.loadbalancer.server.port=25
+      - traefik.tcp.services.smtp.loadbalancer.proxyProtocol.version=2
+      - 'traefik.tcp.routers.jmap.rule=HostSNI(`*`)'
+      - traefik.tcp.routers.jmap.tls.passthrough=true
+      - traefik.tcp.routers.jmap.entrypoints=https
+      - traefik.tcp.routers.jmap.service=jmap
+      - traefik.tcp.services.jmap.loadbalancer.server.port=443
+      - traefik.tcp.services.jmap.loadbalancer.proxyProtocol.version=2
+      - 'traefik.tcp.routers.smtps.rule=HostSNI(`*`)'
+      - traefik.tcp.routers.smtps.tls.passthrough=true
+      - traefik.tcp.routers.smtps.entrypoints=smtps
+      - traefik.tcp.routers.smtps.service=smtps
+      - traefik.tcp.services.smtps.loadbalancer.server.port=465
+      - traefik.tcp.services.smtps.loadbalancer.proxyProtocol.version=2
+      - 'traefik.tcp.routers.imaps.rule=HostSNI(`*`)'
+      - traefik.tcp.routers.imaps.tls.passthrough=true
+      - traefik.tcp.routers.imaps.entrypoints=imaps
+      - traefik.tcp.routers.imaps.service=imaps
+      - traefik.tcp.services.imaps.loadbalancer.server.port=993
+      - traefik.tcp.services.imaps.loadbalancer.proxyProtocol.version=2
+    tty: true
+    stdin_open: true
+    restart: always
+volumes:
+  data: null
+networks:
+  coolify:
+    external: true

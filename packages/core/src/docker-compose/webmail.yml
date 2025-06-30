@@ -1,0 +1,9 @@
+services:
+  snappymail:
+    image: 'djmaze/snappymail:latest'
+    container_name: snappymail
+    restart: unless-stopped
+    ports:
+      - '8888:8888'
+    volumes:
+      - '/var/lib/snappymail:/var/lib/snappymail'
