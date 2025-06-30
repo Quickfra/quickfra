@@ -1,4 +1,5 @@
 import type { DeploymentConfig, DeploymentResult } from './types';
+import { SERVICE_SUBDOMAINS } from './types';
 import type { IDeploymentService, ICoolifyService } from './interfaces';
 
 export class DeploymentService implements IDeploymentService {
@@ -12,17 +13,22 @@ export class DeploymentService implements IDeploymentService {
       const host = 'placeholder.example.com';
       
       // Install Coolify
-      await this.coolifyService.install(host);
+      await this.coolifyService.install(host, config.domain);
       
-      // Add services
+      // Generate service URLs and add services
+      const urls: Record<string, string> = { coolify: `https://${host}` };
+      
       for (const service of config.services) {
-        await this.coolifyService.addService(host, service);
+        const subdomain = config.customSubdomains?.[service] || SERVICE_SUBDOMAINS[service];
+        const serviceUrl = `${subdomain}.${config.domain}`;
+        await this.coolifyService.addService(host, service, serviceUrl);
+        urls[service] = `https://${serviceUrl}`;
       }
       
       return {
         id,
         status: 'running',
-        urls: { coolify: `https://${host}` }
+        urls
       };
     } catch (error) {
       return {
