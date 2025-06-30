@@ -29,40 +29,10 @@
 * **docs**  
   *Technical documentation, ADRs, runbooks, onboarding, internal and external communication.*
 
----
 
-### **Optional, for future growth (can be left empty initially):**
+### **Feature growth:**
 
 * **qa**  
   *Testing, quality, coverage, end-to-end test automation.*
 * **release-managers**  
   *Release management, publishing, versioning, and product changes.*
-
----
-
-### **Recommended Team Summary**
-
-1. `platform-leads`
-2. `frontend`
-3. `backend`
-4. `devops`
-5. `sre`
-6. `secops`
-7. `docs`
-8. (optional) `qa`
-9. (optional) `release-managers`
-
----
-
-## **How to use this right away?**
-
-* Create these teams in your GitHub organization.
-* Assign at least one person per team (you can be all of them initially).
-* Add relevant teams to your `CODEOWNERS` file and repository permissions according to their area.
-
----
-
-**Need help with:**
-- Team descriptions for GitHub organization setup?
-- Ready-to-use `CODEOWNERS` file mapped to actual folders?
-- Internal subteam structure suggestions?
