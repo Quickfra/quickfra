@@ -7,8 +7,8 @@ const PHASE_PROGRESS: Record<ProvisionPhase, number> = {
   initializing: 5,
   validating: 15,
   provisioning_infrastructure: 40,
-  installing_services: 70,
-  configuring_platform: 90,
+  installing_platform: 65,        // Helm install Coolify
+  installing_addons: 85,          // Coolify API calls for add-ons
   finalizing: 95,
   completed: 100,
   failed: 0,
@@ -20,9 +20,9 @@ const PHASE_PROGRESS: Record<ProvisionPhase, number> = {
 const PHASE_TRANSITIONS: Record<ProvisionPhase, ProvisionPhase[]> = {
   initializing: ['validating', 'failed'],
   validating: ['provisioning_infrastructure', 'failed'],
-  provisioning_infrastructure: ['installing_services', 'failed'],
-  installing_services: ['configuring_platform', 'failed'],
-  configuring_platform: ['finalizing', 'failed'],
+  provisioning_infrastructure: ['installing_platform', 'failed'],
+  installing_platform: ['installing_addons', 'failed'],
+  installing_addons: ['finalizing', 'failed'],
   finalizing: ['completed', 'failed'],
   completed: [],
   failed: [],

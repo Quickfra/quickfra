@@ -46,21 +46,21 @@ describe('ProvisionStateMachine', () => {
       expect(status.error).toBeUndefined()
 
       // validating -> provisioning_infrastructure
-      status = machine.advance('provisioning_infrastructure', 'Creating server')
+      status = machine.advance('provisioning_infrastructure', 'Creating K8s cluster')
       expect(status.phase).toBe('provisioning_infrastructure')
       expect(status.progress).toBe(40)
 
-      // provisioning_infrastructure -> installing_services
-      status = machine.advance('installing_services', 'Installing platform')
-      expect(status.phase).toBe('installing_services')
-      expect(status.progress).toBe(70)
+      // provisioning_infrastructure -> installing_platform
+      status = machine.advance('installing_platform', 'Installing Coolify via Helm')
+      expect(status.phase).toBe('installing_platform')
+      expect(status.progress).toBe(65)
 
-      // installing_services -> configuring_platform
-      status = machine.advance('configuring_platform', 'Configuring services')
-      expect(status.phase).toBe('configuring_platform')
-      expect(status.progress).toBe(90)
+      // installing_platform -> installing_addons
+      status = machine.advance('installing_addons', 'Installing selected add-ons')
+      expect(status.phase).toBe('installing_addons')
+      expect(status.progress).toBe(85)
 
-      // configuring_platform -> finalizing
+      // installing_addons -> finalizing
       status = machine.advance('finalizing', 'Finalizing setup')
       expect(status.phase).toBe('finalizing')
       expect(status.progress).toBe(95)
@@ -79,7 +79,7 @@ describe('ProvisionStateMachine', () => {
     it('should create events for each transition', () => {
       machine.advance('validating', 'Validating')
       machine.advance('provisioning_infrastructure', 'Provisioning')
-      machine.advance('installing_services', 'Installing')
+      machine.advance('installing_platform', 'Installing Coolify')
 
       const events = machine.getEvents()
       expect(events).toHaveLength(3)
@@ -89,7 +89,7 @@ describe('ProvisionStateMachine', () => {
       expect(events[1].type).toBe('phase_started')
       expect(events[1].phase).toBe('provisioning_infrastructure')
       expect(events[2].type).toBe('phase_started')
-      expect(events[2].phase).toBe('installing_services')
+      expect(events[2].phase).toBe('installing_platform')
     })
 
     it('should include details in transitions', () => {
@@ -149,12 +149,12 @@ describe('ProvisionStateMachine', () => {
     it('should include original phase in failure details', () => {
       machine.advance('validating', 'Validating')
       machine.advance('provisioning_infrastructure', 'Provisioning')
-      machine.advance('installing_services', 'Installing')
+      machine.advance('installing_platform', 'Installing Coolify')
       machine.fail('Installation failed')
       
       const events = machine.getEvents()
       const failEvent = events[3] // 0: validating, 1: provisioning, 2: installing, 3: fail
-      expect(failEvent.details).toHaveProperty('originalPhase', 'installing_services')
+      expect(failEvent.details).toHaveProperty('originalPhase', 'installing_platform')
     })
   })
 
@@ -190,8 +190,8 @@ describe('ProvisionStateMachine', () => {
     })
 
     it('should reject progress updates on completed provision', () => {
-      machine.advance('installing_services', 'Installing')
-      machine.advance('configuring_platform', 'Configuring')
+      machine.advance('installing_platform', 'Installing')
+      machine.advance('installing_addons', 'Installing add-ons')
       machine.advance('finalizing', 'Finalizing')
       machine.advance('completed', 'Completed')
       
@@ -220,15 +220,15 @@ describe('ProvisionStateMachine', () => {
     })
 
     it('should prevent invalid transitions', () => {
-      expect(() => machine.advance('installing_services', 'Invalid'))
-        .toThrow('Invalid transition from \'initializing\' to \'installing_services\'')
+      expect(() => machine.advance('installing_platform', 'Invalid'))
+        .toThrow('Invalid transition from \'initializing\' to \'installing_platform\'')
     })
 
     it('should prevent transitions from completed state', () => {
       machine.advance('validating', 'Validating')
       machine.advance('provisioning_infrastructure', 'Provisioning')
-      machine.advance('installing_services', 'Installing')
-      machine.advance('configuring_platform', 'Configuring')
+      machine.advance('installing_platform', 'Installing')
+      machine.advance('installing_addons', 'Installing add-ons')
       machine.advance('finalizing', 'Finalizing')
       machine.advance('completed', 'Completed')
       
@@ -258,8 +258,8 @@ describe('ProvisionStateMachine', () => {
       setTimeout(() => {
         machine.advance('validating', 'Validating')
         machine.advance('provisioning_infrastructure', 'Provisioning')
-        machine.advance('installing_services', 'Installing')
-        machine.advance('configuring_platform', 'Configuring')
+        machine.advance('installing_platform', 'Installing')
+        machine.advance('installing_addons', 'Installing add-ons')
         machine.advance('finalizing', 'Finalizing')
         machine.advance('completed', 'Completed')
         

@@ -6,9 +6,9 @@ import { z } from 'zod'
 export const ProvisionPhase = z.enum([
   'initializing',
   'validating',
-  'provisioning_infrastructure',
-  'installing_services',
-  'configuring_platform',
+  'provisioning_infrastructure', // Creates VPC/K8s
+  'installing_platform',         // Helm: Coolify (always installed)
+  'installing_addons',           // Calls Coolify API for add-ons
   'finalizing',
   'completed',
   'failed',
@@ -17,30 +17,29 @@ export const ProvisionPhase = z.enum([
 export type ProvisionPhase = z.infer<typeof ProvisionPhase>
 
 /**
- * Cloud provider options
+ * Cloud provider options where Coolify can be hosted
  */
 export const CloudProvider = z.enum([
   'aws',
+  'oci', 
   'digitalocean',
-  'vultr',
-  'linode',
   'hetzner',
 ])
 
 export type CloudProvider = z.infer<typeof CloudProvider>
 
 /**
- * Platform service options
- * Currently only Coolify is supported, but designed for future extensibility
+ * Add-on services managed BY Coolify platform
+ * These are installed via Coolify's API after the platform is ready
  */
-export const PlatformService = z.enum([
-  'coolify',
-  // Future services will be added here:
-  // 'dokku',
-  // 'caprover',
+export const AddonService = z.enum([
+  'mail',      // Stalwart Mail + Snappymail
+  'database',  // PostgreSQL (MySQL in future)
+  'n8n',      // Workflow automation
+  'status',   // Uptime Kuma monitoring
 ])
 
-export type PlatformService = z.infer<typeof PlatformService>
+export type AddonService = z.infer<typeof AddonService>
 
 /**
  * Provision request DTO
@@ -48,12 +47,13 @@ export type PlatformService = z.infer<typeof PlatformService>
 export const ProvisionRequestSchema = z.object({
   id: z.string().uuid(),
   cloud: CloudProvider,
-  service: PlatformService,
   region: z.string().min(1),
-  size: z.string().min(1),
-  name: z.string().min(1).max(50),
-  domain: z.string().optional(),
-  sshKey: z.string().optional(),
+  size: z.string().min(1),        // Machine/node plan
+  name: z.string().min(1).max(50), // "acme-prod"
+  domain: z.string().optional(),   // Root FQDN
+  sshKey: z.string().optional(),   // Initial SSH key
+  /** Add-ons that Coolify should deploy (can be [] = panel only) */
+  addons: z.array(AddonService).default([]),
   metadata: z.record(z.string(), z.unknown()).default({}),
   createdAt: z.date().default(() => new Date()),
 })

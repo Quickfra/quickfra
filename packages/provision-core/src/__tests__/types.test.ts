@@ -4,22 +4,22 @@ import {
   ProvisionEventSchema,
   ProvisionResultSchema,
   CloudProvider,
-  PlatformService,
+  AddonService,
   ProvisionPhase
 } from '../types'
 
 describe('Provision DTOs', () => {
   describe('ProvisionRequestSchema', () => {
-    it('should validate a complete provision request', () => {
+    it('should validate a complete provision request with all add-ons', () => {
       const validRequest = {
         id: crypto.randomUUID(),
         cloud: 'digitalocean' as CloudProvider,
-        service: 'coolify' as PlatformService,
         region: 'nyc1',
         size: 's-2vcpu-4gb',
         name: 'my-stack',
         domain: 'example.com',
         sshKey: 'ssh-rsa AAAAB3NzaC1yc2E...',
+        addons: ['mail', 'database', 'n8n', 'status'] as AddonService[],
         metadata: { team: 'backend' },
       }
 
@@ -29,14 +29,14 @@ describe('Provision DTOs', () => {
       if (result.success) {
         expect(result.data.createdAt).toBeInstanceOf(Date)
         expect(result.data.metadata).toEqual({ team: 'backend' })
+        expect(result.data.addons).toEqual(['mail', 'database', 'n8n', 'status'])
       }
     })
 
-    it('should validate minimal provision request', () => {
+    it('should validate minimal provision request (Coolify panel only)', () => {
       const minimalRequest = {
         id: crypto.randomUUID(),
         cloud: 'aws' as CloudProvider,
-        service: 'dokku' as PlatformService,
         region: 'us-east-1',
         size: 't3.micro',
         name: 'test-stack',
@@ -49,6 +49,25 @@ describe('Provision DTOs', () => {
         expect(result.data.metadata).toEqual({})
         expect(result.data.domain).toBeUndefined()
         expect(result.data.sshKey).toBeUndefined()
+        expect(result.data.addons).toEqual([]) // Default empty array
+      }
+    })
+
+    it('should validate request with partial add-ons', () => {
+      const partialRequest = {
+        id: crypto.randomUUID(),
+        cloud: 'hetzner' as CloudProvider,
+        region: 'fsn1',
+        size: 'cx11',
+        name: 'dev-stack',
+        addons: ['database', 'status'] as AddonService[],
+      }
+
+      const result = ProvisionRequestSchema.safeParse(partialRequest)
+      expect(result.success).toBe(true)
+      
+      if (result.success) {
+        expect(result.data.addons).toEqual(['database', 'status'])
       }
     })
 
@@ -56,10 +75,23 @@ describe('Provision DTOs', () => {
       const invalidRequest = {
         id: crypto.randomUUID(),
         cloud: 'invalid-cloud',
-        service: 'coolify' as PlatformService,
         region: 'nyc1',
         size: 's-2vcpu-4gb',
         name: 'my-stack',
+      }
+
+      const result = ProvisionRequestSchema.safeParse(invalidRequest)
+      expect(result.success).toBe(false)
+    })
+
+    it('should reject invalid add-on', () => {
+      const invalidRequest = {
+        id: crypto.randomUUID(),
+        cloud: 'digitalocean' as CloudProvider,
+        region: 'nyc1',
+        size: 's-2vcpu-4gb',
+        name: 'my-stack',
+        addons: ['invalid-addon'],
       }
 
       const result = ProvisionRequestSchema.safeParse(invalidRequest)
@@ -70,7 +102,6 @@ describe('Provision DTOs', () => {
       const invalidRequest = {
         id: 'not-a-uuid',
         cloud: 'digitalocean' as CloudProvider,
-        service: 'coolify' as PlatformService,
         region: 'nyc1',
         size: 's-2vcpu-4gb',
         name: 'my-stack',
@@ -84,7 +115,6 @@ describe('Provision DTOs', () => {
       const invalidRequest = {
         id: crypto.randomUUID(),
         cloud: 'digitalocean' as CloudProvider,
-        service: 'coolify' as PlatformService,
         region: 'nyc1',
         size: 's-2vcpu-4gb',
         name: '',
@@ -98,7 +128,6 @@ describe('Provision DTOs', () => {
       const invalidRequest = {
         id: crypto.randomUUID(),
         cloud: 'digitalocean' as CloudProvider,
-        service: 'coolify' as PlatformService,
         region: 'nyc1',
         size: 's-2vcpu-4gb',
         name: 'a'.repeat(51), // Max is 50
@@ -167,9 +196,9 @@ describe('Provision DTOs', () => {
         id: crypto.randomUUID(),
         requestId: crypto.randomUUID(),
         type: 'phase_started' as const,
-        phase: 'installing_services' as ProvisionPhase,
+        phase: 'installing_platform' as ProvisionPhase,
         progress: 70,
-        message: 'Installing Coolify',
+        message: 'Installing Coolify via Helm',
         details: { version: 'v4.0' },
       }
 
@@ -203,7 +232,7 @@ describe('Provision DTOs', () => {
         id: crypto.randomUUID(),
         requestId: crypto.randomUUID(),
         type: 'invalid_type',
-        phase: 'installing_services' as ProvisionPhase,
+        phase: 'installing_platform' as ProvisionPhase,
         progress: 70,
         message: 'Installing Coolify',
         details: {},
