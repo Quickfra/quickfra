@@ -1,34 +1,76 @@
-# Global owners
-* @quickfra/core
+# Global owners - platform leads have final approval on all changes
+* @quickfra/platform-leads
 
 # Documentation
 *.md @quickfra/docs
 /docs/ @quickfra/docs
+README.md @quickfra/docs @quickfra/platform-leads
 
 # Configuration files
-*.json @quickfra/core
-*.yml @quickfra/core
-*.yaml @quickfra/core
-*.toml @quickfra/core
+*.json @quickfra/backend @quickfra/devops
+*.yml @quickfra/backend @quickfra/devops
+*.yaml @quickfra/backend @quickfra/devops
+*.toml @quickfra/backend @quickfra/devops
 
 # Package management
-package.json @quickfra/core
-pnpm-lock.yaml @quickfra/core
-pnpm-workspace.yaml @quickfra/core
+package.json @quickfra/backend @quickfra/frontend
+pnpm-lock.yaml @quickfra/backend @quickfra/frontend
+pnpm-workspace.yaml @quickfra/backend @quickfra/platform-leads
 
 # Nx configuration
-nx.json @quickfra/core
-project.json @quickfra/core
+nx.json @quickfra/platform-leads @quickfra/devops
+project.json @quickfra/backend @quickfra/frontend @quickfra/devops
 
 # GitHub configuration
-/.github/ @quickfra/core
+/.github/ @quickfra/platform-leads @quickfra/secops
+/.github/workflows/ @quickfra/devops @quickfra/secops @quickfra/platform-leads
 
-# Web app
+# Frontend applications
 /apps/web/ @quickfra/frontend
+/apps/dashboard/ @quickfra/frontend
+/packages/ui/ @quickfra/frontend
 
-# Packages
-/packages/ @quickfra/core
+# Backend applications and APIs
+/apps/api/ @quickfra/backend
+/apps/orchestrator/ @quickfra/backend @quickfra/devops
+/packages/config/ @quickfra/backend @quickfra/secops
+
+# Infrastructure as Code
+/infrastructure/ @quickfra/devops @quickfra/platform-leads
+/terraform/ @quickfra/devops
+/helm/ @quickfra/devops
+/k8s/ @quickfra/devops
+/charts/ @quickfra/devops
+
+# Testing and QA
+/tests/ @quickfra/qa
+/e2e/ @quickfra/qa
+/packages/testing/ @quickfra/qa
+*.test.* @quickfra/qa
+*.spec.* @quickfra/qa
+cypress.config.* @quickfra/qa
+jest.config.* @quickfra/qa
 
 # Security sensitive files
-/.github/workflows/ @quickfra/security @quickfra/core
-/packages/config/ @quickfra/security @quickfra/core
+/packages/auth/ @quickfra/secops @quickfra/backend
+/packages/security/ @quickfra/secops
+/.github/workflows/security.yml @quickfra/secops @quickfra/platform-leads
+/.github/workflows/release.yml @quickfra/release-managers @quickfra/platform-leads
+/docker/ @quickfra/devops @quickfra/secops
+
+# Site Reliability and Monitoring
+/monitoring/ @quickfra/sre
+/observability/ @quickfra/sre
+/runbooks/ @quickfra/sre
+/alerts/ @quickfra/sre
+/packages/monitoring/ @quickfra/sre
+
+# Release management
+CHANGELOG.md @quickfra/release-managers
+/release/ @quickfra/release-managers
+/scripts/release/ @quickfra/release-managers
+package.json @quickfra/release-managers @quickfra/backend @quickfra/frontend
+
+# Core packages that need extra review
+/packages/core/ @quickfra/platform-leads @quickfra/backend
+/packages/cli/ @quickfra/backend @quickfra/platform-leads
