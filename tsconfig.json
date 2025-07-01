@@ -29,7 +29,8 @@
       "@quickfra/logger": ["./packages/logger/src"],
       "@quickfra/types": ["./packages/types/src"],
       "@quickfra/utils": ["./packages/utils/src"],
-      "cli": ["packages/cli/src/index.ts"]
+      "cli": ["packages/cli/src/index.ts"],
+      "core": ["packages/core/src/index.ts"]
     },
     "noImplicitAny": true,
     "noImplicitReturns": true,
