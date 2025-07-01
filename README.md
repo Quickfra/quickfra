@@ -5,7 +5,7 @@ This branch is not a tutorial. It’s a log of technical obstacles and how I res
 
 | Step | Description | Evidence |
 |------|-------------|----------|
-| 1. **Study** | I pick a brand‑new tool/tech (e.g., Terraform, OCI, AWS, GCP, Cloudflare API). | Dedicated learning branch `learning/technology` |
+| 1. **Study** | I pick a brand‑new tool/tech (e.g., Terraform, OCI, AWS, GCP, Cloudflare API). | Dedicated folder `learning/technology` |
 | 2. **Experiment** | I break things in a throw‑away sandbox until it finally works. | Atomic commits (`feat`, `fix`, `docs`) |
 | 3. **Record** | 30‑second, no‑edit video clip: problem → solution → commit hash. | Playable video in README.md |
 
