@@ -1,7 +1,7 @@
 ![](https://github.com/Quickfra/quickfra/raw/main/assets/banner.png)
-# Quickfra - Learning Resources
+# Quickfra - Raw Journey to MVP
 
-This branch is my personal learning repository, where I document my journey of mastering new tools and technologies that i will be using and implementing on Quickfra.
+This branch is not a tutorial. It’s a log of technical obstacles and how I resolved them.
 
 | Step | Description | Evidence |
 |------|-------------|----------|
