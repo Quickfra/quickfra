@@ -14,6 +14,8 @@ This branch is not a tutorial. It’s a log of technical obstacles and how they 
 
 https://github.com/user-attachments/assets/890a4c2f-1a3b-40ed-b57d-3c157e3e7fd3
 
+*(Intro 65s): Purpose & Workflow*
+
 ## Roadmap (MVP‑first, polish later)
 
     Day 0 – Spin up first VM with Terraform (Oracle Cloud).
