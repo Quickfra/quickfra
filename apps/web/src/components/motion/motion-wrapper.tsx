@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import React, { ElementType, forwardRef, ReactNode } from "react";
+import { ElementType, forwardRef, ReactNode } from "react";
 
 interface MotionWrapperProps {
   type?: keyof typeof motion;
