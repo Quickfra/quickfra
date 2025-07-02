@@ -1,53 +1,50 @@
-# Simple Oracle Cloud Instance with Terraform
+# Oracle Cloud Instance with Terraform
 
-This is an extremely simple Terraform script that creates a basic Oracle Cloud Infrastructure (OCI) instance.
+This Terraform configuration sets up a simple Oracle Cloud Infrastructure (OCI) with the following components:
 
-## What it creates
+- A Virtual Cloud Network (VCN)
+- An Internet Gateway
+- A Subnet for the instance
+- A Route Table for routing traffic
+- A Security List with rules for SSH and HTTP, HTTPs, and mail ports
+- A VM.Standard.A1.Flex instance (1 OCPU, 2GB RAM - Always Free tier)
+- An Ubuntu 22.04 LTS operating system
 
-- **VCN** (Virtual Cloud Network) with basic networking
-- **Internet Gateway** for public access
-- **Subnet** for the instance
-- **Security rules** allowing SSH (port 22) and HTTP (port 80)
-- **VM.Standard.A1.Flex instance** (1 OCPU, 2GB RAM - Always Free tier)
-- **Ubuntu 22.04 LTS** operating system
+![](https://i.imgur.com/D1bdNKv.png)
 
 ## Prerequisites
 
-1. [OCI CLI configured](https://docs.oracle.com/en-us/iaas/Content/API/SDKDocs/cliinstall.htm) with your credentials in `~/.oci/config`
-2. [Terraform installed](https://www.terraform.io/downloads.html)
-3. SSH key pair generated (`ssh-keygen -t rsa`)
+Get your **OCI credentials** so terraform can set up the quickfra environment.
+Here's how to do it:
+
+1. **Log in to the OCI Console**: [OCI Console](https://cloud.oracle.com)
+2. **Go to User Settings**
+   ![](https://i.imgur.com/f2G17Rf.png)
+
+3. **Go to **Tokens and Keys**
+   ![](https://i.imgur.com/LHMyYc6.png)
+4. **Generate a new API key** and choose `Generate API key pair`
+   ![](https://i.imgur.com/4qxJ8oI.png)
+5. **Download the private key** and save it securely under `terraform/oracle/private_key.pem`
+   ![](https://i.imgur.com/Wsc3C7v.png)
+6. **Fill in the `terraform.tfvars` file** with your details:
+   - `tenancy_ocid`: Your tenancy OCID
+   - `user_ocid`: Your user OCID
+   - `fingerprint`: The fingerprint of your API key
+   - `region`: The region you want to deploy in (e.g., `us-ashburn-1`)
+   - `private_key_path`: Path to your private key file
+   ![](https://i.imgur.com/jaFeevF.png)
+
 
 ## How to use
 
-1. **Copy the example variables file:**
-   ```bash
-   cd terraform/oracle/
-   cp terraform.tfvars.example terraform.tfvars
-   ```
 
-2. **Edit `terraform.tfvars` with your details:**
-   ```hcl
-   compartment_id = "ocid1.compartment.oc1..your-compartment-id"
-   ssh_public_key_path = "~/.ssh/id_rsa.pub"
-   ```
-
-3. **Run Terraform:**
+1. **Run Terraform:**
    ```bash
    terraform init
    terraform plan
    terraform apply
    ```
-
-4. **Connect to your instance:**
-   ```bash
-   ssh -i ~/.ssh/id_rsa ubuntu@<public_ip>
-   ```
-
-## Finding your compartment ID
-
-1. Go to [OCI Console](https://cloud.oracle.com)
-2. Navigate to Identity & Security → Compartments
-3. Copy the OCID of your root compartment or create a new one
 
 ## Clean up
 

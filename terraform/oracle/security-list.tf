@@ -15,16 +15,34 @@ resource "oci_core_security_list" "simple_sl" {
     }
   }
   
-  # Allow HTTP
-  ingress_security_rules {
-    protocol = "6"
-    source   = "0.0.0.0/0"
-    
-    tcp_options {
-      min = 80
-      max = 80
+  # Allow Web
+  dynamic "ingress_security_rules" {
+    for_each = local.web_ports
+    content {
+      protocol = "6"           # TCP
+      source   = "0.0.0.0/0"
+
+      tcp_options {
+        min = ingress_security_rules.value
+        max = ingress_security_rules.value
+      }
     }
   }
+
+  # Allow Mail
+  dynamic "ingress_security_rules" {
+    for_each = local.mail_ports
+    content {
+      protocol = "6"           # TCP
+      source   = "0.0.0.0/0"
+
+      tcp_options {
+        min = ingress_security_rules.value
+        max = ingress_security_rules.value
+      }
+    }
+  }
+
   
   # Allow all outbound traffic
   egress_security_rules {
