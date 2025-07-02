@@ -1,13 +1,13 @@
 # Oracle Cloud Instance with Terraform
 
-This Terraform configuration sets up a simple Oracle Cloud Infrastructure (OCI) with the following components:
+This Terraform configuration sets up an Oracle Cloud Infrastructure (OCI) with the following components:
 
 - A Virtual Cloud Network (VCN)
 - An Internet Gateway
 - A Subnet for the instance
 - A Route Table for routing traffic
-- A Security List with rules for SSH and HTTP, HTTPs, and mail ports
-- A VM.Standard.A1.Flex instance (1 OCPU, 2GB RAM - Always Free tier)
+- A Security List with rules for SSH and HTTP, HTTPs, mail ports and everything required for Coolify.
+- A VM.Standard.A1.Flex instance (1 OCPU, 4GB RAM - Always Free tier)
 - An Ubuntu 22.04 LTS operating system
 
 ![](https://i.imgur.com/D1bdNKv.png)
@@ -21,7 +21,7 @@ Here's how to do it:
 2. **Go to User Settings**
    ![](https://i.imgur.com/f2G17Rf.png)
 
-3. **Go to **Tokens and Keys**
+3. **Go to Tokens and Keys**
    ![](https://i.imgur.com/LHMyYc6.png)
 4. **Generate a new API key** and choose `Generate API key pair`
    ![](https://i.imgur.com/4qxJ8oI.png)
@@ -46,6 +46,12 @@ Here's how to do it:
    terraform apply
    ```
 
+2. **Access the Instance:**
+   After the infrastructure is created, you will be able to access the Coolify Web Panel on `IP:8000`
+
+
+This is how it will look like:
+![](https://i.imgur.com/DzXQMMU.png)
 ## Clean up
 
 To delete all resources:
@@ -53,4 +59,4 @@ To delete all resources:
 terraform destroy
 ```
 
-That's it! You now have a simple Oracle Cloud instance running.
+That's it! You now have an Oracle Cloud instance running Coolify and everything ready to customize your infrastructure.

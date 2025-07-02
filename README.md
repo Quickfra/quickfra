@@ -21,8 +21,9 @@ https://github.com/user-attachments/assets/890a4c2f-1a3b-40ed-b57d-3c157e3e7fd3
 - [x] Day 0 – Spin up first VM with Terraform (Oracle Cloud).
   - [Click to see the result](https://bsky.app/profile/justdiego.com/post/3lsy3navxoc2l)
 
-- [ ] Day 1 – Installation of Coolify inside the VM.
-
+- [x] Day 1 – Installation of Coolify inside the VM.
+  - [Click to see the result](https://bsky.app/profile/justdiego.com/post/3lsyszlway22a)
+  
 - [ ] Day 2 – Mail add‑on container deployed & reachable.
 
 - [ ] Day 3 – Wildcard DNS + Cloudflare Tunnel autoconfig.
