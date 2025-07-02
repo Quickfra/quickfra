@@ -1,6 +1,6 @@
 "use client"
 
-import { Cpu, Cloud, Zap, Ship, Wrench, Hammer, Settings, Github, ExternalLink } from 'lucide-react';
+import { Cpu, Cloud, Zap, Wrench, Hammer, Settings, Github, ExternalLink } from 'lucide-react';
 
 export default function Home() {
   return (
