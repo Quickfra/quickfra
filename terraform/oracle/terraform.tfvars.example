@@ -1,0 +1,6 @@
+# Variables for the simple Oracle Cloud Terraform configuration
+tenancy_ocid = ""
+user_ocid = ""
+fingerprint = ""
+region= ""
+private_key_path = ""
