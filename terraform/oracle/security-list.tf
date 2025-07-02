@@ -2,7 +2,7 @@
 resource "oci_core_security_list" "simple_sl" {
   compartment_id = var.tenancy_ocid
   vcn_id         = oci_core_vcn.simple_vcn.id
-  display_name   = "simple-sl"
+  display_name   = local.sl_name
   
   # Allow SSH
   ingress_security_rules {

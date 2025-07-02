@@ -2,8 +2,8 @@
 resource "oci_core_instance" "simple_instance" {
   availability_domain = data.oci_identity_availability_domains.ads.availability_domains[0].name
   compartment_id      = var.tenancy_ocid
-  display_name        = "simple-instance"
-  shape               = "VM.Standard.A1.Flex"
+  display_name        = local.instance_name
+  shape               = local.instance_shape
   
   shape_config {
     ocpus         = 1

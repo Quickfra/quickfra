@@ -2,7 +2,7 @@
 resource "oci_core_route_table" "simple_rt" {
   compartment_id = var.tenancy_ocid
   vcn_id         = oci_core_vcn.simple_vcn.id
-  display_name   = "simple-rt"
+  display_name   = local.rt_name
   
   route_rules {
     destination       = "0.0.0.0/0"

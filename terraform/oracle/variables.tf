@@ -1,4 +1,11 @@
 # Variables for the simple Oracle Cloud Terraform configuration
+
+variable "global_name" {
+    description = "Global name for the resources"
+    type    = string
+    default = "quickfra"
+}
+
 variable "tenancy_ocid" {
   description = "The OCID of the tenancy / Compartment"
   type        = string
