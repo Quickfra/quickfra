@@ -6,7 +6,7 @@ wait_for_apt_lock() {
   while fuser /var/lib/apt/lists/lock >/dev/null 2>&1 \
      || fuser /var/lib/dpkg/lock >/dev/null 2>&1 \
      || fuser /var/lib/dpkg/lock-frontend >/dev/null 2>&1; do
-    echo "[INFO] Esperando a que se liberen los locks de apt/dpkg..."
+    echo "[INFO] Waiting for locks to free from apt/dpkg..."
     sleep 2
   done
 }
@@ -20,13 +20,13 @@ create_ssh_user() {
 
   if ! id -u "$username" >/dev/null 2>&1; then
     useradd -m -s /bin/bash -p "$hashed_pass" "$username"
-    echo "Usuario $username creado."
+    echo "User $username created."
   else
-    echo "Usuario $username ya existe, actualizando contraseña."
+    echo "User $username already exists, updating password."
     usermod -p "$hashed_pass" "$username"
   fi
 
-  echo "Configuración SSH para $username completa."
+  echo "SSH Config for $username done."
 }
 
 # ─────── 1. System Refresh ───────

@@ -24,7 +24,8 @@ https://github.com/user-attachments/assets/890a4c2f-1a3b-40ed-b57d-3c157e3e7fd3
 - [x] Day 1 – Installation of Coolify inside the VM.
   - [Click to see the result](https://bsky.app/profile/justdiego.com/post/3lsyszlway22a)
   
-- [ ] Day 2 – 🚧 *In progress* | Automate Coolify account registration based on user credentials.
+- [x] Day 2 – Automate Coolify account registration based on user credentials.
+  - [Click to see the result](https://bsky.app/profile/justdiego.com/post/3lt33tfqbhs2n)
 
 - [ ] Day 3 – Deploy & validate mail add-on container (send/receive working).
 

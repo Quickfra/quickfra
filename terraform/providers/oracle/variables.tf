@@ -5,13 +5,12 @@ variable "app_name" {
 }
 
 variable "coolify_email" {
-  description = "Email for the Coolify admin user"
+  description = "Email for the Coolify Panel account"
   type        = string
-  default     = "coolify@yourdomain.com"
 }
 
 variable "coolify_password" {
-  description = "Password for the Coolify admin user"
+  description = "Password for the Coolify Panel account"
   type        = string
 }
 
