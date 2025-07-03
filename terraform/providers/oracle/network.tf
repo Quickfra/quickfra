@@ -79,6 +79,21 @@ resource "oci_core_security_list" "main" {
       }
     }
   }
+
+  # Ingress rules - Coolify ports (if applicable)
+  dynamic "ingress_security_rules" {
+    for_each = local.common.coolify_ports
+    content {
+      protocol = "6" # TCP
+      source   = "0.0.0.0/0"
+      
+      tcp_options {
+        min = ingress_security_rules.value
+        max = ingress_security_rules.value
+      }
+    }
+  }
+
 }
 
 # Subnet

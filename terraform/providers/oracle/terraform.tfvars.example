@@ -1,5 +1,11 @@
-# Oracle Cloud Infrastructure credentials (required if cloud_provider = "oracle")
+# Infrastructure configuration
 app_name                = ""
+coolfy_email            = ""
+coolify_password        = ""
+
+
+
+# Oracle Cloud Infrastructure credentials (required if cloud_provider = "oracle")
 oracle_tenancy_ocid     = ""
 oracle_user_ocid        = ""
 oracle_fingerprint      = ""

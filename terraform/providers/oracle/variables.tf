@@ -1,6 +1,18 @@
 variable "app_name" {
   description = "Name of the application or project"
   type        = string
+  default     = "quickfra"
+}
+
+variable "coolify_email" {
+  description = "Email for the Coolify admin user"
+  type        = string
+  default     = "coolify@yourdomain.com"
+}
+
+variable "coolify_password" {
+  description = "Password for the Coolify admin user"
+  type        = string
 }
 
 variable "oracle_tenancy_ocid" {
