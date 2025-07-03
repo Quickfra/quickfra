@@ -24,18 +24,24 @@ https://github.com/user-attachments/assets/890a4c2f-1a3b-40ed-b57d-3c157e3e7fd3
 - [x] Day 1 – Installation of Coolify inside the VM.
   - [Click to see the result](https://bsky.app/profile/justdiego.com/post/3lsyszlway22a)
   
-- [ ] Day 2 – Mail add‑on container deployed & reachable.
+- [ ] Day 2 – 🚧 *In progress* | Automate Coolify account registration based on user credentials.
 
-- [ ] Day 3 – Wildcard DNS + Cloudflare Tunnel autoconfig.
+- [ ] Day 3 – Deploy & validate mail add-on container (send/receive working).
 
-- [ ] Day 4 – Replicate flow on AWS & GCP.
+- [ ] Day 4 – Wildcard DNS + Cloudflare Tunnel autoconfig.
 
-- [ ] Day 5 – CI pipeline (GitHub Actions) runs terraform apply, triggers tests.
+- [ ] Day 5 – Replicate flow on AWS & GCP.
 
-- [ ] Day 6 – ≥ 80 % test coverage (unit + basic e2e).
+- [ ] Day 6 – CI pipeline (GitHub Actions) runs terraform apply, triggers tests.
 
-- [ ] Day 7 – Merge first stable slice into main.
+- [ ] Day 7 – ≥ 80 % test coverage (unit + basic e2e).
 
+- [ ] Day 8 – Merge first stable slice into `main` and deploy demo.
+
+#### Notes
+- Roadmap is updated as features shift or blockers appear.  
+- Major changes, pivots, or cancellations will be logged here.
+- Want to suggest/track progress? Open an [issue](https://github.com/Quickfra/quickfra/issues).
 
 ### If you’re a recruiter/CTO:
 Scroll the commit history, watch two clips, skim the daily log. Check the whole raw process.
