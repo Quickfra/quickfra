@@ -1,13 +1,7 @@
 ![](https://github.com/Quickfra/quickfra/raw/main/assets/banner.png)
 # Quickfra - Raw Journey to MVP
 
-This branch is not a tutorial. It’s a log of technical obstacles and how they got resolved.
-
-| Step | Description | Evidence |
-|------|-------------|----------|
-| 1. **Study** | Pck a brand‑new tool/tech (e.g., Terraform, OCI, AWS, GCP, Cloudflare API). | Dedicated folder `learning/technology` |
-| 2. **Experiment** | Break things in a throw‑away sandbox until it finally works. | Atomic commits (`feat`, `fix`, `docs`) |
-| 3. **Record** | 30‑second, no‑edit video clip: problem → solution → commit hash. | Playable video in README.md |
+This branch is not a tutorial. It’s the raw process of building Quickfra, a SaaS MVP, with all the mistakes, iterations, and learning moments.
 
 ---
 
