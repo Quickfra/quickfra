@@ -11,24 +11,6 @@ wait_for_apt_lock() {
   done
 }
 
-create_ssh_user() {
-  local username="${app_name}"
-  local plain_pass="${coolify_password}"
-
-  local hashed_pass
-  hashed_pass=$(openssl passwd -6 "$plain_pass")
-
-  if ! id -u "$username" >/dev/null 2>&1; then
-    useradd -m -s /bin/bash -p "$hashed_pass" "$username"
-    echo "User $username created."
-  else
-    echo "User $username already exists, updating password."
-    usermod -p "$hashed_pass" "$username"
-  fi
-
-  echo "SSH Config for $username done."
-}
-
 # ─────── 1. System Refresh ───────
 system_refresh() {
   wait_for_apt_lock
@@ -90,8 +72,6 @@ main() {
   system_refresh
   install_base_utilities
   ssh_hardening
-
-  create_ssh_user
 
   setup_firewall
   enable_fail2ban
