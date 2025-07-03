@@ -1,3 +1,8 @@
+variable "app_name" {
+  description = "Name of the application or project"
+  type        = string
+}
+
 variable "oracle_tenancy_ocid" {
   description = "The OCID of the tenancy / Compartment"
   type        = string

@@ -1,5 +1,4 @@
 # Oracle Cloud Infrastructure Module for Quickfra
-
 terraform {
   required_providers {
     oci = {

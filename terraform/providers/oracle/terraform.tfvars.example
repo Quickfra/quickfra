@@ -1,4 +1,5 @@
 # Oracle Cloud Infrastructure credentials (required if cloud_provider = "oracle")
+app_name                = ""
 oracle_tenancy_ocid     = ""
 oracle_user_ocid        = ""
 oracle_fingerprint      = ""
