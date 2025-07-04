@@ -24,7 +24,7 @@ resource "oci_core_instance" "main" {
   # Basic cloud-init configuration
   metadata = {
     ssh_authorized_keys = fileexists("~/.ssh/id_rsa.pub") ? file("~/.ssh/id_rsa.pub") : ""
-    user_data = base64encode(templatefile("${path.module}/../../common/scripts/cloud_init.sh", {
+    user_data = base64encode(templatefile("${path.module}/../../scripts/cloud_init.sh", {
         app_name = var.app_name,
         coolify_email = var.coolify_email,
         coolify_password = var.coolify_password,

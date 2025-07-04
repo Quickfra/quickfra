@@ -1,5 +1,5 @@
 locals {
-  common = yamldecode(file("${path.module}/../../common/ports.yaml"))
+  common = yamldecode(file("${path.module}/../../ports.yaml"))
   instance_name = "${var.app_name}-instance"
   instance_shape = "VM.Standard.A1.Flex"
   vcn_name      = "${var.app_name}-vcn"
