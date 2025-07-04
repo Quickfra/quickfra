@@ -22,7 +22,7 @@ wait_for_coolify() {
 
 # ─────── Check Health ───────
 is_coolify_ready() {
-  local url="http://150.136.189.161:8000/api/v1/health"
+  local url="http://localhost:8000/api/v1/health"
   [ "$(curl -sf "$url")" = "OK" ]
 }
 
