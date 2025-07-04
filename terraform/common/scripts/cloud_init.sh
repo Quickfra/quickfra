@@ -26,6 +26,51 @@ is_coolify_ready() {
   [ "$(curl -sf "$url")" = "OK" ]
 }
 
+# ─────── Create Coolify Access Token ───────
+create_coolify_access_token() {
+  # Create plain token
+  TOKEN=$(cat /proc/sys/kernel/random/uuid)
+
+  # Hash it with SHA256
+  TOKEN_HASH=$(echo -n "$TOKEN" | sha256sum | awk '{print $1}')
+
+  # Insert into the database
+  docker exec -i coolify-db psql -U coolify -d coolify <<EOF
+INSERT INTO personal_access_tokens (
+  tokenable_type, tokenable_id, name, token, team_id, abilities, created_at, updated_at
+) VALUES (
+  'App\Models\User', 0, 'Quickfra Automation', '$TOKEN_HASH', 0, '["root"]', NOW(), NOW()
+);
+EOF
+
+  # Show plain token once
+  echo "[INFO] Coolify API Access Token Generated"
+  echo "$TOKEN" > /root/.coolify_api_token
+  chmod 600 /root/.coolify_api_token
+}
+
+get_coolify_token() {
+  cat /root/.coolify_api_token
+}
+
+setup_mail_service() {
+  # Set up variables for mail service
+  COOLIFY_MAIL_PROJECT_NAME="Mail Services"
+  COOLIFY_MAIL_PROJECT_DESC="Project for all mail-related infrastructure and automation"
+
+  echo "[INFO] Installing mail server..."
+
+  curl localhost:8000/api/v1/projects \
+  --request POST \
+  --header 'Authorization: Bearer Token' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "name": "string",
+    "description": "string"
+  }'
+}
+
+
 # ─────── System Refresh ───────
 system_refresh() {
   wait_for_apt_lock
@@ -95,6 +140,9 @@ main() {
   allow_coolify_ports
 
   wait_for_coolify
+  create_coolify_access_token
+
+  setup_mail_service
   echo "===== Quickfra bootstrap complete ====="
 }
 
