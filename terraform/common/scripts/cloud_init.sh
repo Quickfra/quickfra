@@ -4,9 +4,9 @@ export DEBIAN_FRONTEND=noninteractive
 
 # ─────── Wait for APT Lock ───────
 wait_for_apt_lock() {
-  while fuser /var/lib/apt/lists/lock >/dev/null 2>&1 \
-     || fuser /var/lib/dpkg/lock >/dev/null 2>&1 \
-     || fuser /var/lib/dpkg/lock-frontend >/dev/null 2>&1; do
+  while fuser /var/lib/apt/lists/lock >/dev/null 2>&1 ||
+    fuser /var/lib/dpkg/lock >/dev/null 2>&1 ||
+    fuser /var/lib/dpkg/lock-frontend >/dev/null 2>&1; do
     echo "[INFO] Waiting for locks to free from apt/dpkg..."
     sleep 2
   done
@@ -45,7 +45,7 @@ EOF
 
   # Show plain token once
   echo "[INFO] Coolify API Access Token Generated"
-  echo "$TOKEN" > /root/.coolify_api_token
+  echo "$TOKEN" >/root/.coolify_api_token
   chmod 600 /root/.coolify_api_token
 }
 
@@ -53,23 +53,77 @@ get_coolify_token() {
   cat /root/.coolify_api_token
 }
 
-setup_mail_service() {
-  # Set up variables for mail service
-  COOLIFY_MAIL_PROJECT_NAME="Mail Services"
-  COOLIFY_MAIL_PROJECT_DESC="Project for all mail-related infrastructure and automation"
-
-  echo "[INFO] Installing mail server..."
-
-  curl -s localhost:8000/api/v1/projects \
-  --request POST \
-  --header "Authorization: Bearer $(get_coolify_token)" \
-  --header "Content-Type: application/json" \
-  --data '{
-    "name": "'"$COOLIFY_MAIL_PROJECT_NAME"'",
-    "description": "'"$COOLIFY_MAIL_PROJECT_DESC"'"
-  }'
+get_coolify_server_data() {
+  curl -s localhost:8000/api/v1/servers \
+    --header "Authorization: Bearer $(get_coolify_token)" |
+    jq '.[0]'
 }
 
+get_coolify_server_uuid() {
+  get_coolify_server_data | jq -r '.uuid'
+}
+
+create_coolify_project() {
+  local project_name="$1"
+  local project_desc="$2"
+
+  echo "[INFO] Creating Coolify project: $project_name"
+  curl -s localhost:8000/api/v1/projects \
+    --request POST \
+    --header "Authorization: Bearer $(get_coolify_token)" \
+    --header "Content-Type: application/json" \
+    --data '{
+      "name": "'"$project_name"'",
+      "description": "'"$project_desc"'"
+    }' | jq -r '.uuid'
+}
+
+create_coolify_app_dockercompose() {
+  local project_uuid="$1"
+  local server_uuid="$2"
+  local environment_name="$3"
+  local docker_compose_raw="$4"
+  local app_name="$5"
+  local app_desc="$6"
+
+  echo "[INFO] Creating Coolify resource: $app_name"
+  curl -s localhost:8000/api/v1/applications \
+    --request POST \
+    --header "Authorization: Bearer $(get_coolify_token)" \
+    --header "Content-Type: application/json" \
+    --data '{
+  "project_uuid": "'"$project_uuid"'",
+  "server_uuid": "'"$server_uuid"'",
+  "environment_name": "'"$environment_name"'",
+  "docker_compose_raw": "'"$docker_compose_raw"'",
+  "name": "'"$app_name"'",
+  "description": "'"$app_desc"'",
+  "instant_deploy": true,
+  "use_build_server": true,
+  "connect_to_docker_network": true
+  }' | jq -r '.uuid'
+}
+setup_mail_service() {
+  # Set up variables for mail service
+  local COOLIFY_MAIL_PROJECT_NAME="Mail Services"
+  local COOLIFY_MAIL_PROJECT_DESC="Project for all mail-related infrastructure and automation"
+
+  echo "[INFO] Creating the Mail Services project in Coolify"
+  local COOLIFY_MAIL_PROJECT_UUID=$(create_coolify_project "$COOLIFY_MAIL_PROJECT_NAME" "$COOLIFY_MAIL_PROJECT_DESC")
+
+  local COOLIFY_MAIL_SERVER_NAME="Stalwart Mail Server"
+  local COOLIFY_MAIL_SERVER_DESC="Stalwart Mail Server for handling all email services"
+
+  local DOCKER_COMPOSE_RAW=$(curl -fsSL "https://raw.githubusercontent.com/quickfra/quickfra/rama/ruta/docker-compose.yml")
+
+  create_coolify_app_dockercompose \
+    "$COOLIFY_MAIL_PROJECT_UUID" \
+    "$(get_coolify_server_uuid)" \
+    "production" \
+    "$DOCKER_COMPOSE_RAW" \
+    "$COOLIFY_MAIL_SERVER_NAME" \
+    "$COOLIFY_MAIL_SERVER_DESC"
+}
 
 # ─────── System Refresh ───────
 system_refresh() {
@@ -93,7 +147,6 @@ install_base_utilities() {
 enable_fail2ban() {
   systemctl enable --now fail2ban
 }
-
 
 # ─────── SSH Hardening ───────
 ssh_hardening() {
