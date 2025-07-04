@@ -91,7 +91,7 @@ create_coolify_app_dockercompose() {
   local app_desc="$6"
 
   echo "[INFO] Creating Coolify resource: $app_name"
-  curl -s localhost:8000/api/v1/applications \
+  curl -s localhost:8000/api/v1/applications/dockercompose \
     --request POST \
     --header "Authorization: Bearer $(get_coolify_token)" \
     --header "Content-Type: application/json" \
