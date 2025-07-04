@@ -7,7 +7,6 @@ wait_for_apt_lock() {
   while fuser /var/lib/apt/lists/lock >/dev/null 2>&1 ||
     fuser /var/lib/dpkg/lock >/dev/null 2>&1 ||
     fuser /var/lib/dpkg/lock-frontend >/dev/null 2>&1; do
-    echo "[INFO] Waiting for locks to free from apt/dpkg..."
     sleep 2
   done
 }
@@ -21,7 +20,6 @@ is_coolify_ready() {
 # ─────── Wait for Coolify ───────
 wait_for_coolify() {
   while ! is_coolify_ready; do
-    echo "[INFO] Waiting for Coolify to be ready..."
     sleep 2
   done
 }
@@ -34,7 +32,6 @@ create_coolify_access_token() {
   # Hash it with SHA256
   TOKEN_HASH=$(echo -n "$TOKEN" | sha256sum | awk '{print $1}')
 
-  echo "[INFO] Creating Coolify API Access Token"
 
   # Insert into the database
   docker exec -i coolify-db psql -U coolify -d coolify <<EOF
@@ -45,13 +42,11 @@ INSERT INTO personal_access_tokens (
 );
 EOF
 
-  echo "[INFO] Enabling Coolify API"
   # Enable API Usage
   docker exec -i coolify-db psql -U coolify -d coolify <<EOF
 UPDATE instance_settings SET is_api_enabled = 'true';
 EOF
 
-  echo "[INFO] Coolify API Access Token Enabled & Generated"
   echo "$TOKEN" >/root/.coolify_api_token
   chmod 600 /root/.coolify_api_token
 }
@@ -74,7 +69,6 @@ create_coolify_project() {
   local project_name="$1"
   local project_desc="$2"
 
-  echo "[INFO] Creating Coolify project: $project_name"
   curl -s localhost:8000/api/v1/projects \
     --request POST \
     --header "Authorization: Bearer $(get_coolify_token)" \
@@ -93,7 +87,6 @@ create_coolify_app_dockercompose() {
   local app_name="$5"
   local app_desc="$6"
 
-  echo "[INFO] Creating Coolify resource: $app_name"
   curl -s localhost:8000/api/v1/applications/dockercompose \
     --request POST \
     --header "Authorization: Bearer $(get_coolify_token)" \
@@ -115,10 +108,9 @@ setup_mail_service() {
   local COOLIFY_MAIL_PROJECT_NAME="Mail Services"
   local COOLIFY_MAIL_PROJECT_DESC="Project for all mail-related infrastructure and automation"
 
-  echo "[INFO] Creating the Mail Services project in Coolify"
-
   local COOLIFY_MAIL_PROJECT_UUID
   COOLIFY_MAIL_PROJECT_UUID=$(create_coolify_project "$COOLIFY_MAIL_PROJECT_NAME" "$COOLIFY_MAIL_PROJECT_DESC")
+
 
   local COOLIFY_MAIL_SERVER_NAME="Stalwart Mail Server"
   local COOLIFY_MAIL_SERVER_DESC="Stalwart Mail Server for handling all email services"
@@ -192,19 +184,31 @@ allow_coolify_ports() {
 
 # ─────── Main ───────
 main() {
+  echo "===== Starting Quickfra bootstrap ====="
+  echo "Refreshing system..."
   system_refresh
+  echo "Installing base utilities..."
   install_base_utilities
+  echo "Hardening SSH configuration..."
   ssh_hardening
 
+  echo "Setting up firewall..."
   setup_firewall
+
+  echo "Enabling Fail2Ban..."
   enable_fail2ban
 
+  echo "Installing Coolify..."
   install_coolify
+  echo "Allowing Coolify ports..."
   allow_coolify_ports
 
+  echo "Waiting for Coolify to be ready..."
   wait_for_coolify
+  echo "Creating Coolify access token..."
   create_coolify_access_token
 
+  echo "Setting up Mail Server inside Coolify..."
   setup_mail_service
   echo "===== Quickfra bootstrap complete ====="
 }
