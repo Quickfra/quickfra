@@ -34,6 +34,8 @@ create_coolify_access_token() {
   # Hash it with SHA256
   TOKEN_HASH=$(echo -n "$TOKEN" | sha256sum | awk '{print $1}')
 
+  echo "[INFO] Creating Coolify API Access Token"
+
   # Insert into the database
   docker exec -i coolify-db psql -U coolify -d coolify <<EOF
 INSERT INTO personal_access_tokens (
@@ -43,12 +45,13 @@ INSERT INTO personal_access_tokens (
 );
 EOF
 
+  echo "[INFO] Enabling Coolify API"
   # Enable API Usage
   docker exec -i coolify-db psql -U coolify -d coolify <<EOF
 UPDATE instance_settings SET is_api_enabled = 'true';
 EOF
 
-  echo "[INFO] Coolify API Access Token Generated"
+  echo "[INFO] Coolify API Access Token Enabled & Generated"
   echo "$TOKEN" >/root/.coolify_api_token
   chmod 600 /root/.coolify_api_token
 }
