@@ -87,6 +87,11 @@ create_coolify_app_dockercompose() {
   local app_name="$5"
   local app_desc="$6"
 
+
+  local docker_compose_raw_serialized=$(printf '%s' "$docker_compose_raw" | jq -Rs .)
+  docker_compose_raw_b64=$(printf '%s' "$docker_compose_raw" | base64 -w 0)
+  echo "$docker_compose_raw_b64"
+
   curl -s localhost:8000/api/v1/applications/dockercompose \
     --request POST \
     --header "Authorization: Bearer $(get_coolify_token)" \
@@ -95,14 +100,13 @@ create_coolify_app_dockercompose() {
   "project_uuid": "'"$project_uuid"'",
   "server_uuid": "'"$server_uuid"'",
   "environment_name": "'"$environment_name"'",
-  "docker_compose_raw": "'"$docker_compose_raw"'",
+  "docker_compose_raw": "'"$docker_compose_raw_b64"'",
   "name": "'"$app_name"'",
   "description": "'"$app_desc"'",
-  "instant_deploy": true,
-  "use_build_server": true,
-  "connect_to_docker_network": true
+  "instant_deploy": true
   }'
 }
+
 setup_mail_service() {
   # Set up variables for mail service
   local COOLIFY_MAIL_PROJECT_NAME="Mail Services"
