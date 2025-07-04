@@ -12,18 +12,18 @@ wait_for_apt_lock() {
   done
 }
 
-# ─────── Wait for Coolify ───────
-wait_for_coolify() {
-  while !is_coolify_ready; do
-    echo "[INFO] Waiting for Coolify to be ready..."
-    sleep 2
-  done
-}
-
 # ─────── Check Health ───────
 is_coolify_ready() {
   local url="http://localhost:8000/api/v1/health"
   [ "$(curl -sf "$url")" = "OK" ]
+}
+
+# ─────── Wait for Coolify ───────
+wait_for_coolify() {
+  while ! is_coolify_ready; do
+    echo "[INFO] Waiting for Coolify to be ready..."
+    sleep 2
+  done
 }
 
 # ─────── Create Coolify Access Token ───────
