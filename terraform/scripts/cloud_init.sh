@@ -116,12 +116,15 @@ setup_mail_service() {
   local COOLIFY_MAIL_PROJECT_DESC="Project for all mail-related infrastructure and automation"
 
   echo "[INFO] Creating the Mail Services project in Coolify"
-  local COOLIFY_MAIL_PROJECT_UUID=$(create_coolify_project "$COOLIFY_MAIL_PROJECT_NAME" "$COOLIFY_MAIL_PROJECT_DESC")
+
+  local COOLIFY_MAIL_PROJECT_UUID
+  COOLIFY_MAIL_PROJECT_UUID=$(create_coolify_project "$COOLIFY_MAIL_PROJECT_NAME" "$COOLIFY_MAIL_PROJECT_DESC")
 
   local COOLIFY_MAIL_SERVER_NAME="Stalwart Mail Server"
   local COOLIFY_MAIL_SERVER_DESC="Stalwart Mail Server for handling all email services"
 
-  local DOCKER_COMPOSE_RAW=$(curl -fsSL "https://raw.githubusercontent.com/Quickfra/quickfra/refs/heads/feature/terraform-infra/terraform/docker/stalwart.yml")
+  local DOCKER_COMPOSE_RAW
+  DOCKER_COMPOSE_RAW=$(curl -fsSL "https://raw.githubusercontent.com/Quickfra/quickfra/refs/heads/feature/terraform-infra/terraform/docker/stalwart.yml")
 
   create_coolify_app_dockercompose \
     "$COOLIFY_MAIL_PROJECT_UUID" \
