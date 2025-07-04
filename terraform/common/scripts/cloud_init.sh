@@ -60,13 +60,13 @@ setup_mail_service() {
 
   echo "[INFO] Installing mail server..."
 
-  curl localhost:8000/api/v1/projects \
+  curl -s localhost:8000/api/v1/projects \
   --request POST \
-  --header 'Authorization: Bearer Token' \
-  --header 'Content-Type: application/json' \
+  --header "Authorization: Bearer $(get_coolify_token)" \
+  --header "Content-Type: application/json" \
   --data '{
-    "name": "string",
-    "description": "string"
+    "name": "'"$COOLIFY_MAIL_PROJECT_NAME"'",
+    "description": "'"$COOLIFY_MAIL_PROJECT_DESC"'"
   }'
 }
 
