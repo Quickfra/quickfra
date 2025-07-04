@@ -2,6 +2,7 @@
 set -euo pipefail
 export DEBIAN_FRONTEND=noninteractive
 
+# ─────── Wait for APT Lock ───────
 wait_for_apt_lock() {
   while fuser /var/lib/apt/lists/lock >/dev/null 2>&1 \
      || fuser /var/lib/dpkg/lock >/dev/null 2>&1 \
@@ -11,7 +12,21 @@ wait_for_apt_lock() {
   done
 }
 
-# ─────── 1. System Refresh ───────
+# ─────── Wait for Coolify ───────
+wait_for_coolify() {
+  while !is_coolify_ready; do
+    echo "[INFO] Waiting for Coolify to be ready..."
+    sleep 2
+  done
+}
+
+# ─────── Check Health ───────
+is_coolify_ready() {
+  local url="http://150.136.189.161:8000/api/v1/health"
+  [ "$(curl -sf "$url")" = "OK" ]
+}
+
+# ─────── System Refresh ───────
 system_refresh() {
   wait_for_apt_lock
   apt-get update -y
@@ -20,7 +35,7 @@ system_refresh() {
   apt-get clean -y
 }
 
-# ─────── 2. Install Base Utilities ───────
+# ─────── Install Base Utilities ───────
 install_base_utilities() {
   wait_for_apt_lock
   apt-get install -y --no-install-recommends \
@@ -29,19 +44,19 @@ install_base_utilities() {
     apt-transport-https ca-certificates gnupg lsb-release
 }
 
-# ─────── 3. Enable Fail2Ban ───────
+# ─────── Enable Fail2Ban ───────
 enable_fail2ban() {
   systemctl enable --now fail2ban
 }
 
 
-# ─────── 4. SSH Hardening ───────
+# ─────── SSH Hardening ───────
 ssh_hardening() {
   sed -i 's/^#\?PasswordAuthentication.*/PasswordAuthentication yes/' /etc/ssh/sshd_config
   systemctl restart ssh
 }
 
-# ─────── 5. Firewall Setup ───────
+# ─────── Firewall Setup ───────
 setup_firewall() {
   ufw default deny incoming
   ufw default allow outgoing
@@ -53,7 +68,7 @@ setup_firewall() {
   ufw --force enable
 }
 
-# ─────── 6. Install Coolify ───────
+# ─────── Install Coolify ───────
 install_coolify() {
   export ROOT_USERNAME="${app_name}"
   export ROOT_USER_EMAIL="${coolify_email}"
@@ -62,12 +77,12 @@ install_coolify() {
   curl -fsSL https://cdn.coollabs.io/coolify/install.sh | bash
 }
 
-# ─────── 7. Allow Coolify Ports ───────
+# ─────── Allow Coolify Ports ───────
 allow_coolify_ports() {
   ufw allow 8000,6001,6002/tcp
 }
 
-# ─────── 8. Main ───────
+# ─────── Main ───────
 main() {
   system_refresh
   install_base_utilities
@@ -79,6 +94,7 @@ main() {
   install_coolify
   allow_coolify_ports
 
+  wait_for_coolify
   echo "===== Quickfra bootstrap complete ====="
 }
 
