@@ -105,7 +105,7 @@ create_coolify_app_dockercompose() {
   "instant_deploy": true,
   "use_build_server": true,
   "connect_to_docker_network": true
-  }' | jq -r '.uuid'
+  }'
 }
 setup_mail_service() {
   # Set up variables for mail service
