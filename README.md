@@ -1,14 +1,14 @@
 ![](https://github.com/Quickfra/quickfra/raw/main/assets/banner.png)
-# Quickfra - Raw Journey to MVP
+# Quickfra - Terraform Infra to MVP
 
-This branch is not a tutorial. It’s the raw process of building Quickfra, a SaaS MVP, with all the mistakes, iterations, and learning moments.
+This branch is not a tutorial. It’s the raw process of building Quickfra's Terraform Infrastructure, a SaaS MVP, with all the mistakes, iterations, and learning moments.
 
 ---
 
 
 https://github.com/user-attachments/assets/890a4c2f-1a3b-40ed-b57d-3c157e3e7fd3
 
-*Intro: (65s) Purpose & Workflow*
+*Intro: Purpose & Workflow*
 
 ## Roadmap (MVP‑first, polish later)
 
