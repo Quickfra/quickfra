@@ -43,7 +43,11 @@ INSERT INTO personal_access_tokens (
 );
 EOF
 
-  # Show plain token once
+  # Enable API Usage
+  docker exec -i coolify-db psql -U coolify -d coolify <<EOF
+UPDATE instance_settings SET is_api_enabled = 'true';
+EOF
+
   echo "[INFO] Coolify API Access Token Generated"
   echo "$TOKEN" >/root/.coolify_api_token
   chmod 600 /root/.coolify_api_token
