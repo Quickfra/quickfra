@@ -71,8 +71,7 @@ create_coolify_app_dockercompose() {
   log "[COOLIFY] :: Creating Resource: $app_name"
 
   local docker_compose_raw_serialized=$(printf '%s' "$docker_compose_raw" | jq -Rs .)
-  docker_compose_raw_b64=$(printf '%s' "$docker_compose_raw" | base64 -w 0)
-  echo "$docker_compose_raw_b64"
+  local docker_compose_raw_b64=$(printf '%s' "$docker_compose_raw" | base64 -w 0)
 
   curl -s localhost:8000/api/v1/applications/dockercompose \
     --request POST \
