@@ -1,0 +1,17 @@
+services:
+  cloudflared:
+    container_name: cloudflare-tunnel
+    image: 'cloudflare/cloudflared:latest'
+    restart: unless-stopped
+    network_mode: host
+    command: 'tunnel --no-autoupdate run'
+    environment:
+      - 'TUNNEL_TOKEN=${CLOUDFLARE_TUNNEL_TOKEN}'
+    healthcheck:
+      test:
+        - CMD
+        - cloudflared
+        - '--version'
+      interval: 5s
+      timeout: 20s
+      retries: 10
