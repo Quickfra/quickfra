@@ -48,7 +48,7 @@ create_coolify_project() {
   local project_name="$1"
   local project_desc="$2"
 
-  log "[COOLIFY] :: Creating project: $project_name"
+  log "[COOLIFY] :: Creating project: $project_name" >&2 # log to stderr
 
   curl -s localhost:8000/api/v1/projects \
     --request POST \
@@ -78,24 +78,14 @@ create_coolify_app_dockercompose() {
     --header "Authorization: Bearer $(get_coolify_token)" \
     --header "Content-Type: application/json" \
     --data '{
-  "project_uuid": "'"$project_uuid"'",
-  "server_uuid": "'"$server_uuid"'",
-  "environment_name": "'"$environment_name"'",
-  "docker_compose_raw": "'"$docker_compose_raw_b64"'",
-  "name": "'"$app_name"'",
-  "description": "'"$app_desc"'",
-  "instant_deploy": true
-  }')
-
-  echo '{
-  "project_uuid": "'"$project_uuid"'",
-  "server_uuid": "'"$server_uuid"'",
-  "environment_name": "'"$environment_name"'",
-  "docker_compose_raw": "'"$docker_compose_raw_b64"'",
-  "name": "'"$app_name"'",
-  "description": "'"$app_desc"'",
-  "instant_deploy": true
-  }'
+ "project_uuid": "'"$project_uuid"'",
+ "server_uuid": "'"$server_uuid"'",
+ "environment_name": "'"$environment_name"'",
+ "docker_compose_raw": "'"$docker_compose_raw_b64"'",
+ "name": "'"$app_name"'",
+ "description": "'"$app_desc"'",
+ "instant_deploy": true
+}')
 }
 
 get_coolify_token() {
