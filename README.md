@@ -21,9 +21,9 @@ https://github.com/user-attachments/assets/890a4c2f-1a3b-40ed-b57d-3c157e3e7fd3
 - [x] Day 2 – Automate Coolify account registration based on user credentials.
   - [Click to see the result](https://bsky.app/profile/justdiego.com/post/3lt33tfqbhs2n)
 
-- [ ] Day 3 – Deploy & validate mail add-on container (send/receive working).
+- [ ] Day 3 – Wildcard DNS + Cloudflare Tunnel autoconfig.
 
-- [ ] Day 4 – Wildcard DNS + Cloudflare Tunnel autoconfig.
+- [ ] Day 4 – Deploy & validate mail add-on container (send/receive working).
 
 - [ ] Day 5 – Replicate flow on AWS & GCP.
 
