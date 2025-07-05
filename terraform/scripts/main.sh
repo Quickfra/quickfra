@@ -8,7 +8,7 @@ export COOLIFY_PASSWORD="${coolify_password}"
 export DOMAIN="${domain_name}"
 export CLOUDFLARE_TUNNEL_TOKEN="${cloudflare_tunnel_token}"
 
-RAW="https://raw.githubusercontent.com/quickfra/feature/terraform-infra/scripts"
+RAW="https://raw.githubusercontent.com/quickfra/quickfra/feature/terraform-infra/terraform/scripts/"
 
 grab() {  # tiny helper that fails fast
   source <(curl -fsSL "$RAW/$1") || { printf >&2 "❌  %s\n" "$1"; exit 1; }
