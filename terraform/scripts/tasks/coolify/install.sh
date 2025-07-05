@@ -7,6 +7,6 @@ task_setup_coolify() {
   export ROOT_USER_PASSWORD="${coolify_password}"
   curl -fsSL https://cdn.coollabs.io/coolify/install.sh | bash
 
-  wait_for_coolify_ready
+  wait_for_coolify
   create_coolify_access_token
 }
