@@ -12,7 +12,7 @@ task_setup_mail() {
   local COOLIFY_MAIL_SERVER_DESC="Stalwart Mail Server for handling all email services"
 
   local DOCKER_COMPOSE_RAW
-  DOCKER_COMPOSE_RAW=$(curl -fsSL "https://raw.githubusercontent.com/Quickfra/quickfra/refs/heads/feature/terraform-infra/terraform/docker/stalwart.yaml")
+  DOCKER_COMPOSE_RAW=$(curl -fsSL "$DOCKER_BASE_URL/stalwart.yaml")
 
   create_coolify_app_dockercompose \
     "$COOLIFY_MAIL_PROJECT_UUID" \
