@@ -73,11 +73,21 @@ create_coolify_app_dockercompose() {
   local docker_compose_raw_serialized=$(printf '%s' "$docker_compose_raw" | jq -Rs .)
   local docker_compose_raw_b64=$(printf '%s' "$docker_compose_raw" | base64 -w 0)
 
-  curl -s localhost:8000/api/v1/applications/dockercompose \
+  response=$(curl -s localhost:8000/api/v1/applications/dockercompose \
     --request POST \
     --header "Authorization: Bearer $(get_coolify_token)" \
     --header "Content-Type: application/json" \
     --data '{
+  "project_uuid": "'"$project_uuid"'",
+  "server_uuid": "'"$server_uuid"'",
+  "environment_name": "'"$environment_name"'",
+  "docker_compose_raw": "'"$docker_compose_raw_b64"'",
+  "name": "'"$app_name"'",
+  "description": "'"$app_desc"'",
+  "instant_deploy": true
+  }')
+
+  echo '{
   "project_uuid": "'"$project_uuid"'",
   "server_uuid": "'"$server_uuid"'",
   "environment_name": "'"$environment_name"'",
