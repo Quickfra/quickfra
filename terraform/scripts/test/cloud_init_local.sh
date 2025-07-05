@@ -9,5 +9,5 @@ rm -rf /data/coolify /var/lib/coolify /etc/coolify
 export app_name="miapp"
 export coolify_email="yo@correo.com"
 export coolify_password="#TestInfra123456"
-curl -fsSL https://raw.githubusercontent.com/Quickfra/quickfra/refs/heads/feature/terraform-infra/terraform/scripts/cloud_init.sh | bash
+curl -fsSL https://raw.githubusercontent.com/Quickfra/quickfra/refs/heads/feature/terraform-infra/terraform/scripts/main.sh | bash
 
