@@ -28,6 +28,8 @@ resource "oci_core_instance" "main" {
         app_name = var.app_name,
         coolify_email = var.coolify_email,
         coolify_password = var.coolify_password,
+        cloudflare_tunnel_token = var.cloudflare_tunnel_token,
+        domain_name = var.domain_name,
     }))
   }
 }
