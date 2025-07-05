@@ -8,10 +8,10 @@ export COOLIFY_PASSWORD="${coolify_password}"
 export DOMAIN="${domain_name}"
 export CLOUDFLARE_TUNNEL_TOKEN="${cloudflare_tunnel_token}"
 
-RAW="https://raw.githubusercontent.com/quickfra/quickfra/feature/terraform-infra/terraform/scripts/"
+SOURCE_BASE_URL="https://raw.githubusercontent.com/quickfra/quickfra/feature/terraform-infra/terraform"
 
 grab() {  # tiny helper that fails fast
-  source <(curl -fsSL "$RAW/$1") || { printf >&2 "❌  %s\n" "$1"; exit 1; }
+  source <(curl -fsSL "$SOURCE_BASE_URL/scripts/$1") || { printf >&2 "❌  %s\n" "$1"; exit 1; }
 }
 
 # ------- load defaults (non‑secret) -------
