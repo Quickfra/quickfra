@@ -27,7 +27,7 @@ for f in install mail; do
 done
 
 for f in system security; do
-  grab tasks/system${f}.sh
+  grab tasks/system/${f}.sh
 done
 
 # ------- main orchestration ---------------
