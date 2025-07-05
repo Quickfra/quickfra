@@ -6,7 +6,7 @@ services:
     network_mode: host
     command: 'tunnel --no-autoupdate run'
     environment:
-      - 'TUNNEL_TOKEN=${CLOUDFLARE_TUNNEL_TOKEN}'
+      - TUNNEL_TOKEN=${CLOUDFLARE_TUNNEL_TOKEN:-%token%}
     healthcheck:
       test:
         - CMD
