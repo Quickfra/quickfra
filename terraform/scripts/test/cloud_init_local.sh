@@ -1,10 +1,12 @@
-# Remove old Coolify installations
-docker stop coolify coolify-redis coolify-realtime coolify-db coolify-sentinel coolify-proxy
-docker rm coolify coolify-redis coolify-realtime coolify-db coolify-sentinel coolify-proxy
-docker volume ls -q | grep -E 'coolify' | xargs -r docker volume rm
-docker network ls -q | xargs -r docker network rm
-docker images -a | grep -E 'coollabsio|traefik|postgres|redis' | awk '{print $3}' | xargs -r docker rmi
+# Remove ALL Docker containers, images, volumes, networks, and prune system
+docker ps -aq | xargs -r docker stop
+docker ps -aq | xargs -r docker rm
+docker volume ls -q | xargs -r docker volume rm
+docker network ls --filter "type=custom" -q | xargs -r docker network rm
+docker images -aq | xargs -r docker rmi -f
 rm -rf /data/coolify /var/lib/coolify /etc/coolify
+docker builder prune -af
+docker system prune -af --volumes
 
 export app_name="miapp"
 export coolify_email="yo@correo.com"
