@@ -12,7 +12,7 @@ task_setup_cloudfared() {
   local coolify_server_desc="Cloudflare Tunnel Service for secure access to Coolify and other services"
 
   local docker_compose_raw
-  docker_compose_raw=$(curl -fsSL "$DOCKER_BASE_URL/cloudflared.yaml" | sed "s|%token%|$CLOUDFLARE_TUNNEL_TOKEN|g)")
+  docker_compose_raw=$(curl -fsSL "$DOCKER_BASE_URL/cloudflared.yaml" | sed "s|%token%|$CLOUDFLARE_TUNNEL_TOKEN|g")
 
   create_coolify_app_dockercompose \
     "$coolify_project_uuid" \
