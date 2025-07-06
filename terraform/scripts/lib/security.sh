@@ -21,8 +21,5 @@ setup_firewall() {
   ufw default allow outgoing
   ufw allow 22/tcp
   ufw allow 80,443/tcp
-  ufw allow 25,465,587/tcp
-  ufw allow 110,995/tcp
-  ufw allow 143,993/tcp
   ufw --force enable
 }

@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 task_setup_mail() {
+  log "[COOLIFY] :: Setting up Mail Service..."
   
   # Set up variables for mail service
   local coolify_project_name="Mail Services"
@@ -20,4 +21,11 @@ task_setup_mail() {
     "$docker_compose_raw" \
     "$coolify_resource_name" \
     "$coolify_resource_desc"
+}
+
+allow_mail_access() {
+  log "[COOLIFY] :: Allowing access to the mail server"
+  ufw allow 25,465,587/tcp
+  ufw allow 110,995/tcp
+  ufw allow 143,993/tcp
 }
