@@ -62,6 +62,10 @@ get_main_coolify_server_data() {
   get_all_coolify_servers_data | jq ".[0]"
 }
 
+get_main_coolify_server_uuid() {
+  get_main_coolify_server_data | jq -r '.uuid'
+}
+
 
 # -------------------------------- UTILS --------------------------------ç
 allow_coolify_access() {
@@ -133,14 +137,6 @@ EOF
   chmod 600 /root/.coolify_api_token
 }
 
-get_coolify_server_uuid() {
-  get_coolify_server_data | jq -r '.uuid'
-}
-
-get_coolify_server_id() {
-  get_coolify_server_data | jq -r '.id'
-}
-
 get_coolify_token() {
   cat "$COOLIFY_TOKEN_PATH"
 }
@@ -158,7 +154,7 @@ set_coolify_server_wildcard_domain() {
   local server_id="$2"
 
   docker exec -i coolify-db psql -U coolify -d coolify <<EOF
-UPDATE server_settings SET wildcard_domain = 'http://$domain' WHERE server_id = '$(get_coolify_server_id)';
+UPDATE server_settings SET wildcard_domain = 'http://$domain' WHERE server_id = '$(get_main_coolify_server_uuid)';
 EOF
 }
 

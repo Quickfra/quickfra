@@ -11,5 +11,5 @@ task_setup_coolify() {
   create_coolify_access_token
 
   set_coolify_domain "$DOMAIN"
-  set_coolify_server_wildcard_domain "$DOMAIN" "$(get_coolify_server_uuid)"
+  set_coolify_server_wildcard_domain "$DOMAIN" "$(get_main_coolify_server_uuid)"
 }
