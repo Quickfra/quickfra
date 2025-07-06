@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 task_setup_cloudfared() {
+  log "[COOLIFY] :: Setting up Cloudflare Tunneling..."
   # Set up variables for mail service
   local coolify_project_name="Cloudflare"
   local coolify_project_desc="Project for managing Cloudflare services"
