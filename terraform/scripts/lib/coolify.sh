@@ -124,7 +124,7 @@ create_coolify_access_token() {
   # Hash it with SHA256
   local token_hash=$(echo -n "$token" | sha256sum | awk '{print $1}')
 
-  # Insert into the database
+  # Insert into the database | TODO: Replace with API call once available
   docker exec -i coolify-db psql -U coolify -d coolify <<EOF
 INSERT INTO personal_access_tokens (
   tokenable_type, tokenable_id, name, token, team_id, abilities, created_at, updated_at
@@ -133,7 +133,7 @@ INSERT INTO personal_access_tokens (
 );
 EOF
 
-  # Enable API Usage
+  # Enable API Usage | TODO: Replace with API call once available
   docker exec -i coolify-db psql -U coolify -d coolify <<EOF
 UPDATE instance_settings SET is_api_enabled = 'true';
 EOF
@@ -149,6 +149,7 @@ get_coolify_token() {
 set_coolify_domain() {
   local domain="$1"
 
+  # TODO: Replace with API call once available
   docker exec -i coolify-db psql -U coolify -d coolify <<EOF
 UPDATE instance_settings SET fqdn = 'http://coolify.$domain';
 EOF
@@ -158,6 +159,7 @@ set_coolify_server_wildcard_domain() {
   local domain="$1"
   local server_id="$2"
 
+  # TODO: Replace with API call once available
   docker exec -i coolify-db psql -U coolify -d coolify <<EOF
 UPDATE server_settings SET wildcard_domain = 'http://$domain' WHERE server_id = '$(get_main_coolify_server_id)';
 EOF
