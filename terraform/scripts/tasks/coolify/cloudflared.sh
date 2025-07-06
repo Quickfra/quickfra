@@ -17,7 +17,7 @@ task_setup_cloudfared() {
   create_coolify_app_dockercompose \
     "$coolify_project_uuid" \
     "$(get_coolify_server_uuid)" \
-    "production" \
+    "$COOLIFY_DEFAULT_ENVIRONMENT" \
     "$docker_compose_raw" \
     "$coolify_server_name" \
     "$coolify_server_desc"

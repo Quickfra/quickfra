@@ -16,7 +16,7 @@ task_setup_mail() {
   create_coolify_app_dockercompose \
     "$coolify_project_uuid" \
     "$(get_coolify_server_uuid)" \
-    "production" \
+    "$COOLIFY_DEFAULT_ENVIRONMENT" \
     "$docker_compose_raw" \
     "$coolify_resource_name" \
     "$coolify_resource_desc"
