@@ -138,6 +138,21 @@ get_coolify_token() {
   cat "$COOLIFY_TOKEN_PATH"
 }
 
+set_coolify_domain() {
+  local domain="$1"
 
+  docker exec -i coolify-db psql -U coolify -d coolify <<EOF
+UPDATE instance_settings SET fqdn = '$domain';
+EOF
+}
+
+set_coolify_server_wildcard_domain() {
+  local domain="$1"
+  local server_id="$2"
+
+  docker exec -i coolify-db psql -U coolify -d coolify <<EOF
+UPDATE server_settings SET wildcard_domain = '$domain' WHERE server_id = '$server_id';
+EOF
+}
 
 
