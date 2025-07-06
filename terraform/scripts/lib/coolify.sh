@@ -67,7 +67,7 @@ get_main_coolify_server_uuid() {
 }
 
 get_main_coolify_server_id() {
-  get_main_coolify_server_data | jq -r '.id'
+  get_main_coolify_server_data | jq -r '.settings.server_id'
 }
 
 
