@@ -159,7 +159,7 @@ set_coolify_server_wildcard_domain() {
   local server_id="$2"
 
   docker exec -i coolify-db psql -U coolify -d coolify <<EOF
-UPDATE server_settings SET wildcard_domain = 'http://$domain' WHERE server_id = '$(get_main_coolify_server_uuid)';
+UPDATE server_settings SET wildcard_domain = 'http://$domain' WHERE server_id = '$(get_main_coolify_server_id)';
 EOF
 }
 
