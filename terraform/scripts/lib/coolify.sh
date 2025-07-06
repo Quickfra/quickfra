@@ -142,7 +142,7 @@ set_coolify_domain() {
   local domain="$1"
 
   docker exec -i coolify-db psql -U coolify -d coolify <<EOF
-UPDATE instance_settings SET fqdn = '$domain';
+UPDATE instance_settings SET fqdn = 'http://$domain';
 EOF
 }
 
@@ -151,7 +151,7 @@ set_coolify_server_wildcard_domain() {
   local server_id="$2"
 
   docker exec -i coolify-db psql -U coolify -d coolify <<EOF
-UPDATE server_settings SET wildcard_domain = '$domain' WHERE server_id = '$server_id';
+UPDATE server_settings SET wildcard_domain = 'http://$domain' WHERE server_id = '$server_id';
 EOF
 }
 
