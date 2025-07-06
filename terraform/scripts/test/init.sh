@@ -12,6 +12,7 @@ export app_name="miapp"
 export coolify_email="yo@correo.com"
 export coolify_password="#TestInfra123456"
 export domain_name="sandboxdev.qzz.io"
+export install_mail="true"
 export cloudflare_tunnel_token="no-token-yet"
 curl -fsSL https://raw.githubusercontent.com/Quickfra/quickfra/refs/heads/feature/terraform-infra/terraform/scripts/main.sh | bash
 
