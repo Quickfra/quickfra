@@ -43,7 +43,12 @@ main() {
     task_setup_mail
     allow_mail_access
   fi
-  task_setup_cloudfared
+
+  if [[ "$CLOUDFLARE_TUNNEL_TOKEN" != "your_cloudflare_tunnel_token" ]]; then
+    log "== Installing Cloudflare Tunneling =="
+    task_setup_cloudfared
+  fi
+
   log "== Allowing Access to the Panel =="
   allow_coolify_access
   log "== All done =="
