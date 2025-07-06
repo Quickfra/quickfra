@@ -38,8 +38,12 @@ main() {
   task_setup_security
   log "== Installing Coolify =="
   task_setup_coolify
-  log "== Installing Mail Service =="
-  task_setup_mail
+  if [[ "${INSTALL_MAIL,,}" == "true" || "$INSTALL_MAIL" == "1" ]]; then
+    log "== Installing Mail Service =="
+    task_setup_mail
+    allow_mail_access
+  fi
+  task_setup_cloudfared
   log "== Allowing Access to the Panel =="
   allow_coolify_access
   log "== All done =="
