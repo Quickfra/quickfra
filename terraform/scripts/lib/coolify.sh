@@ -108,3 +108,31 @@ allow_coolify_access() {
   # Allow Coolify ports in the firewall
   ufw allow 8000,6001,6002/tcp
 }
+
+create_coolify_resource(){
+  local project_uuid="$1"
+  local resource_name="$2"
+  local resource_desc="$3"
+  local compose_file="$4"
+  local replacements="${5:-}"
+
+  local docker_compose_raw=$(curl -fsSL "$DOCKER_BASE_URL/${compose_file}.yaml")
+
+  if [[ -n "$replacements" ]]; then
+    # Split replacements by '|'
+    IFS='|' read -ra TOKENS <<< "$replacements"
+    for pair in "${TOKENS[@]}"; do
+      local key="${pair%%:*}"
+      local value="${pair#*:}"
+      docker_compose_raw=$(echo "$docker_compose_raw" | sed "s|$key|$value|g")
+    done
+  fi
+
+  create_coolify_app_dockercompose \
+    "$project_uuid" \
+    "$(get_coolify_server_uuid)" \
+    "$COOLIFY_DEFAULT_ENVIRONMENT" \
+    "$docker_compose_raw" \
+    "$resource_name" \
+    "$resource_desc"
+}

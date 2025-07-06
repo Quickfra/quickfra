@@ -1,27 +1,44 @@
+
 #!/usr/bin/env bash
-task_setup_mail() {
-  log "[COOLIFY] :: Setting up Mail Service..."
-  
-  # Set up variables for mail service
-  local coolify_project_name="Mail Services"
-  local coolify_project_desc="Project for all mail-related infrastructure and automation"
 
-  local coolify_project_uuid
-  coolify_project_uuid=$(create_coolify_project "$coolify_project_name" "$coolify_project_desc")
+create_coolify_mail_project() {
+  local project_name="Mail Services"
+  local project_desc="Project for managing mail services including mail server and webmail client"
 
-  local coolify_resource_name="Stalwart Mail Server"
-  local coolify_resource_desc="Stalwart Mail Server for handling all email services"
-
-  local docker_compose_raw=$(curl -fsSL "$DOCKER_BASE_URL/stalwart.yaml"  | sed "s|yourdomain|$DOMAIN|g")
-
-  create_coolify_app_dockercompose \
-    "$coolify_project_uuid" \
-    "$(get_coolify_server_uuid)" \
-    "$COOLIFY_DEFAULT_ENVIRONMENT" \
-    "$docker_compose_raw" \
-    "$coolify_resource_name" \
-    "$coolify_resource_desc"
+  create_coolify_project "$project_name" "$project_desc"
 }
+
+create_coolify_mailserver_resource() {
+  local project_uuid="$1"
+
+  create_coolify_resource \
+  "$project_uuid" \
+  "Stalwart Mail Server" \
+  "Stalwart Mail Server for handling all email services" \
+  "stalwart" \
+  "%domain%:$DOMAIN"
+}
+
+create_coolify_webmail_resource() {
+  local project_uuid="$1"
+
+  create_coolify_resource \
+  "$project_uuid" \
+  "Snappymail Web Client" \
+  "Snappymail Webmail Client for accessing emails via web interface" \
+  "snappymail" \
+}
+
+
+task_setup_mail() {
+  log "[COOLIFY] :: Setting up Mail..."
+  local project_uuid="$(create_coolify_mail_project)"
+
+  create_coolify_mailserver_resource "$project_uuid"
+  create_coolify_webmail_resource "$project_uuid"
+  log "[COOLIFY] :: Mail setup complete."
+}
+
 
 allow_mail_access() {
   log "[COOLIFY] :: Allowing access to the mail server"

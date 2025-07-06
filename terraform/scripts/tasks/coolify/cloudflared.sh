@@ -1,25 +1,26 @@
 #!/usr/bin/env bash
 
+create_coolify_cloudflared_project() {
+  local project_name="Cloudflare Tunneling"
+  local project_desc="Project for managing Cloudflare tunneling services"
+
+  create_coolify_project "$project_name" "$project_desc"
+}
+
+create_coolify_cloudflared_resource() {
+  local project_uuid="$1"
+
+  create_coolify_resource \
+  "$project_uuid" \
+  "Cloudflared Tunnel" \
+  "Cloudflare Tunnel Service for secure access to Coolify and other services" \
+  "cloudflared" \
+  "%token%:$CLOUDFLARE_TUNNEL_TOKEN"
+}
+
 task_setup_cloudfared() {
   log "[COOLIFY] :: Setting up Cloudflare Tunneling..."
-  # Set up variables for mail service
-  local coolify_project_name="Cloudflare"
-  local coolify_project_desc="Project for managing Cloudflare services"
-
-  local coolify_project_uuid
-  coolify_project_uuid=$(create_coolify_project "$coolify_project_name" "$coolify_project_desc")
-
-  local coolify_server_name="Cloudflared"
-  local coolify_server_desc="Cloudflare Tunnel Service for secure access to Coolify and other services"
-
-  local docker_compose_raw
-  docker_compose_raw=$(curl -fsSL "$DOCKER_BASE_URL/cloudflared.yaml" | sed "s|%token%|$CLOUDFLARE_TUNNEL_TOKEN|g")
-
-  create_coolify_app_dockercompose \
-    "$coolify_project_uuid" \
-    "$(get_coolify_server_uuid)" \
-    "$COOLIFY_DEFAULT_ENVIRONMENT" \
-    "$docker_compose_raw" \
-    "$coolify_server_name" \
-    "$coolify_server_desc"
+  local project_uuid="$(create_coolify_cloudflared_project)"
+  create_coolify_cloudflared_resource "$project_uuid"
+  log "[COOLIFY] :: Cloudflare Tunneling setup complete."
 }

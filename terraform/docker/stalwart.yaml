@@ -19,14 +19,14 @@ services:
       - '/data/coolify/certs:/data/certs:ro'
     labels:
       - traefik.enable=true
-      - 'traefik.http.routers.mailserver.rule=Host(`mail.yourdomain`) || Host(`autodiscover.yourdomain`) || Host(`autoconfig.yourdomain`) || Host(`mta-sts.yourdomain`) || Host(`mx.yourdomain`) || Host(`smtp.yourdomain`) || Host(`pop.yourdomain`) || Host(`imap.yourdomain`)'
+      - 'traefik.http.routers.mailserver.rule=Host(`mail.%domain%`) || Host(`autodiscover.%domain%`) || Host(`autoconfig.%domain%`) || Host(`mta-sts.%domain%`) || Host(`mx.%domain%`) || Host(`smtp.%domain%`) || Host(`pop.%domain%`) || Host(`imap.%domain%`)'
       - traefik.http.routers.mailserver.entrypoints=http
       - traefik.http.routers.mailserver.service=mailserver
       - traefik.http.services.mailserver.loadbalancer.server.port=8080
       - traefik.http.routers.mailserver.tls.certresolver=letsencrypt
       - traefik.http.routers.mailserver.tls=true
-      - 'traefik.http.routers.mailserver.tls.domains[0].main=mail.yourdomain'
-      - 'traefik.http.routers.mailserver.tls.domains[0].sans=autodiscover.yourdomain,autoconfig.yourdomain,mta-sts.yourdomain,mx.yourdomain,smtp.yourdomain,pop.yourdomain,imap.yourdomain'
+      - 'traefik.http.routers.mailserver.tls.domains[0].main=mail.%domain%'
+      - 'traefik.http.routers.mailserver.tls.domains[0].sans=autodiscover.%domain%,autoconfig.%domain%,mta-sts.%domain%,mx.%domain%,smtp.%domain%,pop.%domain%,imap.%domain%'
       - 'traefik.tcp.routers.smtp.rule=HostSNI(`*`)'
       - traefik.tcp.routers.smtp.entrypoints=smtp
       - traefik.tcp.routers.smtp.service=smtp
