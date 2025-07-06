@@ -66,6 +66,11 @@ get_main_coolify_server_uuid() {
   get_main_coolify_server_data | jq -r '.uuid'
 }
 
+get_main_coolify_server_id() {
+  get_main_coolify_server_data | jq -r '.id'
+}
+
+
 
 # -------------------------------- UTILS --------------------------------ç
 allow_coolify_access() {
