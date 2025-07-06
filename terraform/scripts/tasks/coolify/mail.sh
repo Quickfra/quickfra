@@ -26,7 +26,7 @@ create_coolify_webmail_resource() {
   "$project_uuid" \
   "Snappymail Web Client" \
   "Snappymail Webmail Client for accessing emails via web interface" \
-  "snappymail" \
+  "snappymail"
 }
 
 
