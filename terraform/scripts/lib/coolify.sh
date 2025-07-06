@@ -100,7 +100,7 @@ create_coolify_resource(){
 
   create_coolify_app_dockercompose \
     "$project_uuid" \
-    "$(get_coolify_server_uuid)" \
+    "$(get_main_coolify_server_uuid)" \
     "$COOLIFY_DEFAULT_ENVIRONMENT" \
     "$docker_compose_raw" \
     "$resource_name" \
