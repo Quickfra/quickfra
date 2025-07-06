@@ -23,7 +23,7 @@ for f in utils system security coolify; do
   grab lib/${f}.sh
 done
 
-for f in install mail; do
+for f in install mail cloudflared; do
   grab tasks/coolify/${f}.sh
 done
 
