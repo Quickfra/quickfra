@@ -2,11 +2,12 @@
 set -euo pipefail
 
 # ------- load variables injected by terraform -------
-export APP_NAME="${app_name}"
-export COOLIFY_EMAIL="${coolify_email}"
+export APP_NAME="${app_name:-quickfra}"
+export COOLIFY_EMAIL="${coolify_email:-yourname@youremail.com}"
 export COOLIFY_PASSWORD="${coolify_password}"
-export DOMAIN="${domain_name}"
-export CLOUDFLARE_TUNNEL_TOKEN="${cloudflare_tunnel_token}"
+export DOMAIN="${domain_name:-yourdomain.com}"
+export CLOUDFLARE_TUNNEL_TOKEN="${cloudflare_tunnel_token:-your_cloudflare_tunnel_token}"
+export INSTALL_MAIL="${install_mail:-false}"
 
 SOURCE_BASE_URL="https://raw.githubusercontent.com/quickfra/quickfra/feature/terraform-infra/terraform"
 
