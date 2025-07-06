@@ -54,9 +54,10 @@ create_coolify_app_dockercompose() {
 }
 
 get_coolify_server_data() {
+  local server_id=0
   curl -s localhost:8000/api/v1/servers \
     --header "Authorization: Bearer $(get_coolify_token)" |
-    jq '.[0]'
+    jq ".[$server_id]"
 }
 
 
@@ -134,6 +135,10 @@ get_coolify_server_uuid() {
   get_coolify_server_data | jq -r '.uuid'
 }
 
+get_coolify_server_id() {
+  get_coolify_server_data | jq -r '.id'
+}
+
 get_coolify_token() {
   cat "$COOLIFY_TOKEN_PATH"
 }
@@ -151,7 +156,7 @@ set_coolify_server_wildcard_domain() {
   local server_id="$2"
 
   docker exec -i coolify-db psql -U coolify -d coolify <<EOF
-UPDATE server_settings SET wildcard_domain = 'http://$domain' WHERE server_id = '$server_id';
+UPDATE server_settings SET wildcard_domain = 'http://$domain' WHERE server_id = '$(get_coolify_server_id)';
 EOF
 }
 
