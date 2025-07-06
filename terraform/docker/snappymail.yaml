@@ -7,5 +7,3 @@ services:
       - '8888:8888'
     volumes:
       - '/var/lib/snappymail:/var/lib/snappymail'
-    environment:
-      - TZ=Europe/Madrid
