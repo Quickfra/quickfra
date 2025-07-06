@@ -150,7 +150,7 @@ set_coolify_domain() {
   local domain="$1"
 
   docker exec -i coolify-db psql -U coolify -d coolify <<EOF
-UPDATE instance_settings SET fqdn = 'http://$domain';
+UPDATE instance_settings SET fqdn = 'http://coolify.$domain';
 EOF
 }
 
