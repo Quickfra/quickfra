@@ -53,11 +53,13 @@ create_coolify_app_dockercompose() {
 }'
 }
 
-get_coolify_server_data() {
-  local server_id=0
+get_all_coolify_servers_data() {
   curl -s localhost:8000/api/v1/servers \
-    --header "Authorization: Bearer $(get_coolify_token)" |
-    jq ".[$server_id]"
+    --header "Authorization: Bearer $(get_coolify_token)"
+}
+
+get_main_coolify_server_data() {
+  get_all_coolify_servers_data | jq ".[0]"
 }
 
 
