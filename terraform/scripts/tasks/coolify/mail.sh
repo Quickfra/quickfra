@@ -2,23 +2,22 @@
 task_setup_mail() {
   
   # Set up variables for mail service
-  local COOLIFY_MAIL_PROJECT_NAME="Mail Services"
-  local COOLIFY_MAIL_PROJECT_DESC="Project for all mail-related infrastructure and automation"
+  local coolify_project_name="Mail Services"
+  local coolify_project_desc="Project for all mail-related infrastructure and automation"
 
-  local COOLIFY_MAIL_PROJECT_UUID
-  COOLIFY_MAIL_PROJECT_UUID=$(create_coolify_project "$COOLIFY_MAIL_PROJECT_NAME" "$COOLIFY_MAIL_PROJECT_DESC")
+  local coolify_project_uuid
+  coolify_project_uuid=$(create_coolify_project "$coolify_project_name" "$coolify_project_desc")
 
-  local COOLIFY_MAIL_SERVER_NAME="Stalwart Mail Server"
-  local COOLIFY_MAIL_SERVER_DESC="Stalwart Mail Server for handling all email services"
+  local coolify_resource_name="Stalwart Mail Server"
+  local coolify_resource_desc="Stalwart Mail Server for handling all email services"
 
-  local DOCKER_COMPOSE_RAW
-  DOCKER_COMPOSE_RAW=$(curl -fsSL "$DOCKER_BASE_URL/stalwart.yaml"  | sed "s|yourdomain|$DOMAIN|g")
+  local docker_compose_raw=$(curl -fsSL "$DOCKER_BASE_URL/stalwart.yaml"  | sed "s|yourdomain|$DOMAIN|g")
 
   create_coolify_app_dockercompose \
-    "$COOLIFY_MAIL_PROJECT_UUID" \
+    "$coolify_project_uuid" \
     "$(get_coolify_server_uuid)" \
     "production" \
-    "$DOCKER_COMPOSE_RAW" \
-    "$COOLIFY_MAIL_SERVER_NAME" \
-    "$COOLIFY_MAIL_SERVER_DESC"
+    "$docker_compose_raw" \
+    "$coolify_resource_name" \
+    "$coolify_resource_desc"
 }
