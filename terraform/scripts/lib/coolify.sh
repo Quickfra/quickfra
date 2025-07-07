@@ -53,6 +53,23 @@ create_coolify_app_dockercompose() {
 }'
 }
 
+set_coolify_app_env_var() {
+  local app_uuid="$1"
+  local key="$2"
+  local value="$3"
+
+  log "[COOLIFY] :: Setting environment variable: $env_var_name for app: $app_uuid"
+
+  curl -s localhost:8000/api/v1/applications/$app_uuid/envs \
+    --request POST \
+    --header "Authorization: Bearer $(get_coolify_token)" \
+    --header "Content-Type: application/json" \
+    --data '{
+      "name": "'"$key"'",
+      "value": "'"$value"'"
+    }'
+}
+
 get_all_coolify_servers_data() {
   curl -s localhost:8000/api/v1/servers \
     --header "Authorization: Bearer $(get_coolify_token)"
