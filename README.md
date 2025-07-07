@@ -26,13 +26,15 @@ https://github.com/user-attachments/assets/890a4c2f-1a3b-40ed-b57d-3c157e3e7fd3
   
 - [ ] Day 4 – Deploy & validate mail add-on container.
 
-- [ ] Day 5 – Replicate flow on AWS & GCP.
+- [ ] Day 5 – Setup kuma status page tracking installed addons.
 
-- [ ] Day 6 – CI pipeline (GitHub Actions) runs terraform apply, triggers tests.
+- [ ] Day 6 – Replicate flow on AWS & GCP.
 
-- [ ] Day 7 – ≥ 80 % test coverage (unit + basic e2e).
+- [ ] Day 7 – CI pipeline (GitHub Actions) runs terraform apply, triggers tests.
 
-- [ ] Day 8 – Merge first stable slice into `main` and deploy demo.
+- [ ] Day 8 – ≥ 80 % test coverage (unit + basic e2e).
+
+- [ ] Day 9 – Merge first stable slice into `main` and deploy demo.
 
 #### Notes
 - Roadmap is updated as features shift or blockers appear.  
