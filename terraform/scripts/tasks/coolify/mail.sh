@@ -31,17 +31,14 @@ create_coolify_webmail_resource() {
 
 
 task_setup_mail() {
-  log "[COOLIFY] :: Setting up Mail..."
   local project_uuid="$(create_coolify_mail_project)"
 
   create_coolify_mailserver_resource "$project_uuid"
   create_coolify_webmail_resource "$project_uuid"
-  log "[COOLIFY] :: Mail setup complete."
 }
 
 
 allow_mail_access() {
-  log "[COOLIFY] :: Allowing access to the mail server"
   ufw allow 25,465,587/tcp
   ufw allow 110,995/tcp
   ufw allow 143,993/tcp

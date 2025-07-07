@@ -27,13 +27,7 @@ set_cloudflared_env_token() {
 }
 
 task_setup_cloudfared() {
-  set -x
-  log "[COOLIFY] :: Setting up Cloudflare Tunneling..."
   local project_uuid="$(create_coolify_cloudflared_project)"
-  echo "DEBUG: project_uuid=[$project_uuid]"
   local resource_uuid="$(create_coolify_cloudflared_resource "$project_uuid")"
-  echo "DEBUG: resource_uuid=[$resource_uuid]"
   set_cloudflared_env_token "$resource_uuid"
-  log "[COOLIFY] :: Cloudflare Tunneling setup complete."
-  set +x
 }

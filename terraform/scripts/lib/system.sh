@@ -12,7 +12,6 @@ wait_for_apt_lock() {
 
 # ─────── System Refresh ───────
 system_refresh() {
-  log "[SYSTEM] :: Refreshing packages..."
   wait_for_apt_lock
   apt-get update -y
   apt-get dist-upgrade -y
@@ -22,7 +21,6 @@ system_refresh() {
 
 # ─────── Install Base Utilities ───────
 install_base_utilities() {
-  log "[SYSTEM] :: Installing base utilities"
   wait_for_apt_lock
   apt-get install -y --no-install-recommends \
     curl wget git htop vim ufw fail2ban \
