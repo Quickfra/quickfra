@@ -35,10 +35,14 @@ task_setup_mail() {
 
   local mailserver_uuid="$(create_coolify_mailserver_resource "$project_uuid")"
   # TODO: Change to UUID when available
+  # Warning: This is a temporary workaround until the UUID is available, as the service application UUID is not linked to the service uuid.
+  # It is currently using the docker (docker/compose.yaml) service name as the ID, so be careful when changing the compose names.
   set_coolify_service_application_domain "stalwart-mail" "stalwart.$DOMAIN"
   
   local webmail_uuid="$(create_coolify_webmail_resource "$project_uuid")"
   # TODO: Change to UUID when available
+  # Warning: This is a temporary workaround until the UUID is available, as the service application UUID is not linked to the service uuid.
+  # It is currently using the docker (docker/compose.yaml) service name as the ID, so be careful when changing the compose names.
   set_coolify_service_application_domain "snappymail" "webmail.$DOMAIN"
 }
 
