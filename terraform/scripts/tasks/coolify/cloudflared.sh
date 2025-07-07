@@ -15,12 +15,20 @@ create_coolify_cloudflared_resource() {
   "Cloudflared Tunnel" \
   "Cloudflare Tunnel Service for secure access to Coolify and other services" \
   "cloudflared" \
-  "%token%:$CLOUDFLARE_TUNNEL_TOKEN"
+}
+
+set_cloudflared_env_token() {
+  local resource_uuid="$1"
+  local token="$CLOUDFLARE_TUNNEL_TOKEN"
+
+  set_coolify_app_env_var "$resource_uuid" "CLOUDFLARE_TUNNEL_TOKEN" "$token"
 }
 
 task_setup_cloudfared() {
   log "[COOLIFY] :: Setting up Cloudflare Tunneling..."
   local project_uuid="$(create_coolify_cloudflared_project)"
-  create_coolify_cloudflared_resource "$project_uuid"
+  local resource_uuid="$(create_coolify_cloudflared_resource "$project_uuid")"
+  log "[COOLIFY] :: Setting Cloudflare Tunnel token for resource: $resource_uuid"
+  set_cloudflared_env_token "$resource_uuid"
   log "[COOLIFY] :: Cloudflare Tunneling setup complete."
 }
