@@ -16,3 +16,5 @@ export install_mail="true"
 export cloudflare_tunnel_token="no-token-yet"
 curl -fsSL https://raw.githubusercontent.com/Quickfra/quickfra/refs/heads/feature/terraform-infra/terraform/scripts/main.sh | bash
 
+
+# curl -fsSL https://raw.githubusercontent.com/Quickfra/quickfra/refs/heads/feature/terraform-infra/terraform/scripts/test/init.sh | bash
