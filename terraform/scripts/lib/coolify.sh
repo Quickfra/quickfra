@@ -54,7 +54,7 @@ set_coolify_service_env_var() {
   local key="$2"
   local value="$3"
 
-  curl -s -v localhost:8000/api/v1/services/$app_uuid/envs \
+  curl -s localhost:8000/api/v1/services/$app_uuid/envs \
     --request PATCH \
     --header "Authorization: Bearer $(get_coolify_token)" \
     --header "Content-Type: application/json" \
