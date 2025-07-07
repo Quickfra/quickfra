@@ -23,7 +23,8 @@ https://github.com/user-attachments/assets/890a4c2f-1a3b-40ed-b57d-3c157e3e7fd3
 
 - [x] Day 3 – Wildcard DNS + Cloudflare Tunnel autoconfig.
   - [Click to see the result](https://bsky.app/profile/justdiego.com/post/3ltcqhh2fgc2u)
-- [ ] Day 4 – Deploy & validate mail add-on container (send/receive working).
+  
+- [ ] Day 4 – Deploy & validate mail add-on container.
 
 - [ ] Day 5 – Replicate flow on AWS & GCP.
 
