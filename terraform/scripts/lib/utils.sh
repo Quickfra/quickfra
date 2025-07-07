@@ -4,3 +4,8 @@
 log() { 
   printf '[%s] %s\n' "$(date +%T)" "$*" >&2
 }
+
+hash() {
+  local input="$1"
+  python3 -c "import bcrypt; print(bcrypt.hashpw(b'$input', bcrypt.gensalt()).decode())"
+}
