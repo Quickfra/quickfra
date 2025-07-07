@@ -50,7 +50,7 @@ create_coolify_app_dockercompose() {
  "name": "'"$app_name"'",
  "description": "'"$app_desc"'",
  "instant_deploy": true
-}'
+}' | jq -r '.uuid'
 }
 
 set_coolify_app_env_var() {
