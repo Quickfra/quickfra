@@ -49,12 +49,12 @@ create_coolify_app_dockercompose() {
 }' | jq -r '.uuid'
 }
 
-set_coolify_app_env_var() {
+set_coolify_service_env_var() {
   local app_uuid="$1"
   local key="$2"
   local value="$3"
 
-  curl -s localhost:8000/api/v1/applications/$app_uuid/envs \
+  curl -s localhost:8000/api/v1/services/$app_uuid/envs \
     --request POST \
     --header "Authorization: Bearer $(get_coolify_token)" \
     --header "Content-Type: application/json" \
@@ -80,7 +80,6 @@ get_main_coolify_server_uuid() {
 get_main_coolify_server_id() {
   get_main_coolify_server_data | jq -r '.settings.server_id'
 }
-
 
 
 # -------------------------------- UTILS --------------------------------ç

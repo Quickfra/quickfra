@@ -23,7 +23,7 @@ set_cloudflared_env_token() {
   local resource_uuid="$1"
   local token="$CLOUDFLARE_TUNNEL_TOKEN"
 
-  set_coolify_app_env_var "$resource_uuid" "CLOUDFLARE_TUNNEL_TOKEN" "$token"
+  set_coolify_service_env_var "$resource_uuid" "CLOUDFLARE_TUNNEL_TOKEN" "$token"
 }
 
 task_setup_cloudfared() {
