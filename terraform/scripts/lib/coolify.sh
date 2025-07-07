@@ -173,4 +173,15 @@ UPDATE server_settings SET wildcard_domain = 'http://$domain' WHERE server_id = 
 EOF
 }
 
+set_coolify_service_application_domain() {
+  local uuid="$1"
+  local domain="$2"
+
+  # TODO: Replace with API call once available
+  docker exec -i coolify-db psql -U coolify -d coolify <<EOF
+UPDATE service_applications
+SET fqdn = 'http://$2'
+WHERE uuid = '$1';
+EOF
+}
 
