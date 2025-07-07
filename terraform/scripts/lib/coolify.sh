@@ -33,7 +33,7 @@ create_coolify_app_dockercompose() {
   local app_name="$5"
   local app_desc="$6"
 
-  log "[COOLIFY] :: Creating Resource: $app_name"
+  log "[COOLIFY] :: Creating Resource: $app_name" >&2 # log to stderr
 
   local docker_compose_raw_serialized=$(printf '%s' "$docker_compose_raw" | jq -Rs .)
   local docker_compose_raw_b64=$(printf '%s' "$docker_compose_raw" | base64 -w 0)
@@ -58,7 +58,7 @@ set_coolify_app_env_var() {
   local key="$2"
   local value="$3"
 
-  log "[COOLIFY] :: Setting environment variable: $key for app: $app_uuid"
+  log "[COOLIFY] :: Setting environment variable: $key for app: $app_uuid" >&2
 
   curl -s localhost:8000/api/v1/applications/$app_uuid/envs \
     --request POST \
@@ -91,7 +91,7 @@ get_main_coolify_server_id() {
 
 # -------------------------------- UTILS --------------------------------ç
 allow_coolify_access() {
-  log "[COOLIFY] :: Allowing access to Coolify panel"
+  log "[COOLIFY] :: Allowing access to Coolify panel"  >&2
   # Allow Coolify ports in the firewall
   ufw allow 8000,6001,6002/tcp
 }
@@ -127,14 +127,14 @@ create_coolify_resource(){
 # ─────── Wait for Coolify ───────
 wait_for_coolify() {
   while ! is_coolify_ready; do
-    log "[COOLIFY] :: Waiting to be ready..."
+    log "[COOLIFY] :: Waiting to be ready..." >&2
     sleep 2
   done
 }
 
 # ─────── Create Coolify Access Token ───────
 create_coolify_access_token() {
-  log "[COOLIFY] :: Creating access token"
+  log "[COOLIFY] :: Creating access token" >&2
   # Create plain token
   local token=$(cat /proc/sys/kernel/random/uuid)
 
