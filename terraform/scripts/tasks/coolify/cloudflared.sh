@@ -14,7 +14,7 @@ create_coolify_cloudflared_resource() {
   "$project_uuid" \
   "Cloudflared Tunnel" \
   "Cloudflare Tunnel Service for secure access to Coolify and other services" \
-  "cloudflared" \
+  "cloudflared"
 }
 
 set_cloudflared_env_token() {
