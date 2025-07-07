@@ -2,5 +2,5 @@
 
 # ─────── Logger ───────
 log() { 
-  printf '[%s] %s\n' "$(date +%T)" "$*"; 
+  printf '[%s] %s\n' "$(date +%T)" "$*" >&2
 }
