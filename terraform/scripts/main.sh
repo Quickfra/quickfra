@@ -19,7 +19,7 @@ grab() {  # tiny helper that fails fast
 grab env/defaults.sh
 
 # ------- import libraries (pure) ----------
-for f in utils system security coolify; do
+for f in utils system security coolify snappymail; do
   grab lib/${f}.sh
 done
 
