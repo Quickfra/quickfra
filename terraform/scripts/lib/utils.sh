@@ -13,3 +13,23 @@ hash() {
 escape_sed() {
   echo "$1" | sed -e 's/[\/&]/\\&/g'
 }
+
+is_container_running() {
+  local name="$1"
+  [ "$(docker inspect -f '{{.State.Status}}' "$name")" = "running" ]
+}
+
+wait_for_container() {
+  local name="$1"
+  local timeout="${2:-60}"
+  local waited=0
+  while ! is_container_running "$name"; do
+    log "[${name^^}] :: Waiting to be running..." >&2
+    sleep 2
+    waited=$((waited + 2))
+    if [ "$waited" -ge "$timeout" ]; then
+      echo "[${name^^}] :: Timeout waiting for container to be running" >&2
+      exit 1
+    fi
+  done
+}
