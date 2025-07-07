@@ -34,10 +34,12 @@ task_setup_mail() {
   local project_uuid="$(create_coolify_mail_project)"
 
   local mailserver_uuid="$(create_coolify_mailserver_resource "$project_uuid")"
+  echo "DEBUG: mailserver_uuid=[$mailserver_uuid]"
   set_coolify_service_application_domain "$mailserver_uuid" "stalwart.$DOMAIN"
   
   local webmail_uuid="$(create_coolify_webmail_resource "$project_uuid")"
   set_coolify_service_application_domain "$webmail_uuid" "webmail.$DOMAIN"
+  echo "DEBUG: webmail_uuid=[$webmail_uuid]"
 }
 
 
