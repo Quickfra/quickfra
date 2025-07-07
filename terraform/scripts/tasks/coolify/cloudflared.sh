@@ -4,17 +4,19 @@ create_coolify_cloudflared_project() {
   local project_name="Cloudflare Tunneling"
   local project_desc="Project for managing Cloudflare tunneling services"
 
-  create_coolify_project "$project_name" "$project_desc"
+  local uuid="$(create_coolify_project "$project_name" "$project_desc")"
+  echo "$uuid"
 }
 
 create_coolify_cloudflared_resource() {
   local project_uuid="$1"
 
-  create_coolify_resource \
+  local uuid="$(create_coolify_resource \
   "$project_uuid" \
   "Cloudflared Tunnel" \
   "Cloudflare Tunnel Service for secure access to Coolify and other services" \
-  "cloudflared"
+  "cloudflared")"
+  echo "$uuid"
 }
 
 set_cloudflared_env_token() {
@@ -25,9 +27,13 @@ set_cloudflared_env_token() {
 }
 
 task_setup_cloudfared() {
+  set -x
   log "[COOLIFY] :: Setting up Cloudflare Tunneling..."
   local project_uuid="$(create_coolify_cloudflared_project)"
+  echo "DEBUG: project_uuid=[$project_uuid]"
   local resource_uuid="$(create_coolify_cloudflared_resource "$project_uuid")"
+  echo "DEBUG: resource_uuid=[$resource_uuid]"
   set_cloudflared_env_token "$resource_uuid"
   log "[COOLIFY] :: Cloudflare Tunneling setup complete."
+  set +x
 }
