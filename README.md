@@ -27,7 +27,7 @@ https://github.com/user-attachments/assets/890a4c2f-1a3b-40ed-b57d-3c157e3e7fd3
 - [x] Day 4 – Deploy & validate mail add-on container.
   - [Click to see the result](https://bsky.app/profile/justdiego.com/post/3lthqpk7fkk2p)
 
-- [ ] Day 5 – Setup kuma status page tracking installed addons.
+- [ ] Day 5 – Setup Status page tracking installed addons.
 
 - [ ] Day 6 – Replicate flow on AWS & GCP.
 
