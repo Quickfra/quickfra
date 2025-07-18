@@ -1,3 +1,9 @@
+# This project is currently on development
+### To see the current progress (Terraform deployment) go to the [feature/terraform-infra](https://github.com/Quickfra/quickfra/tree/feature/terraform-infra) branch
+
+# Preview
+https://github.com/user-attachments/assets/844e1aa0-d52d-4ef1-83d7-4771f88d4ab8
+
 ![](./assets/banner.png)
 
 # Quickfra - Automated platform deployment tool
